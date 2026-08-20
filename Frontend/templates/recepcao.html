@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="styles.css">
+    <title>Cadastro</title>
+</head>
+<body>
+    
+    <!-- menu/barra lateral -->
+     <aside class = "barra-lateral">
+
+    <div class="logo">
+        Triagem+
+    </div>
+
+        <ul class = "menu">
+            <li> <i class="bx bx-user-plus"></i> Cadastro  </li>
+            <li> <i class="bx bx-spreadsheet"></i> Triagem </li>
+            <li> <i class="bx bx-bar-chart-alt-2"></i> Relatórios </li>
+            <li> <i class="bx bx-first-aid"></i> Atendimento </li>
+        </ul>
+     </aside>
+
+     <main class="conteudo">
+        <div class = "form">
+            <div class = "form-header">
+                <div class="title">
+                    <h1>Cadastro do Paciente</h1>
+                </div>
+            </div>
+
+        <div class="input-group"> 
+            <h2>Dados do Paciente</h2>
+            <div class="input-box">
+
+                <div class="campo campo-completo">
+                <label>Nome completo *</label>
+                <input id="name" type="text"placeholder="Digite o nome completo" required>
+                </div>
+
+                <div class="campo">
+                <label>Data de Nascimento *</label>
+                <input type="date" id="dataNascimento" required>
+                </div>
+                
+                <div class="campo">
+                <label>RG *</label>
+                <input type="text" id="rg" placeholder="Digite o RG" required>
+                </div>  
+                
+                <div class="campo">
+                <label>CPF *</label>
+                <input type="text" id="cpf" placeholder="Digite o CPF" required>
+                </div>
+
+                <div class="campo">
+                <label>Nome da mãe *</label>
+                <input type="text" id="nome-mae" placeholder="Digite o nome da mãe" required>
+                </div>
+
+                <div class="campo">
+                <label>Nome do pai</label>
+                <input type="text" id="nome-pai" placeholder="Digite o nome do pai">
+                </div>
+
+                <div class="campo">
+                <label>Sexo</label>
+                <select id="sexo" required>
+                    <option value="" disabled selected>Selecione</option>
+                    <option value="masculino">Masculino</option>
+                    <option value="feminino">Feminino</option>
+                    <option value="outro">Outro</option>
+                    <option value="nao_informar">Prefiro não informar</option>
+                </select>
+                </div>
+
+                <div class="botoes">
+                <button type="button" class="btn-prox" onclick="proximaEtapa()">
+                    Próximo
+                </button>
+                </div>
+            </div>
+
+        </div>
+        <div class="atendimento">
+            <h2>Gestão de Atendimentos</h2>
+
+            <table class="tabela">
+                <tr>
+                    <th>Nº Atendimento</th>
+                    <th>Paciente</th>
+                    <th>Situação</th>
+                    <th>Ações</th>
+                </tr>
+
+            </table>
+
+        </div>
+        </div>
+
+     </main>
+
+</body>
+</html>
