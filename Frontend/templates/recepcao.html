@@ -32,13 +32,13 @@
                 </div>
             </div>
 
-        <div class="input-group"> 
+        <div class="input-group" id="form1"> 
             <h2>Dados do Paciente</h2>
             <div class="input-box">
 
                 <div class="campo campo-completo">
                 <label>Nome completo *</label>
-                <input id="name" type="text"placeholder="Digite o nome completo" required>
+                <input id="name" type="text" placeholder="Digite o nome completo" required>
                 </div>
 
                 <div class="campo">
@@ -83,8 +83,97 @@
                 </button>
                 </div>
             </div>
-
         </div>
+
+            <div class="input-group" id="form2" style="display: none;"> 
+                <h2>Dados de Contato</h2>
+                <div class="input-box">
+
+                    <div class="campo">
+                        <label>CEP*</label>
+                        <input type="text" id="CEP" placeholder="Digite o CEP">
+                    </div>
+
+                    <div class="campo">
+                        <Label>Logradouro* </Label>
+                        <input type="text" id="Logradouro" placeholder="Digite o Logradouro"> 
+                    </div>
+
+                    <div class="campo">
+                        <Label>Bairro* </Label>
+                        <input type="text" id="Bairro" placeholder="Digite o Bairro"> 
+                    </div>
+
+                    <div class="campo">
+                        <Label>Número* </Label>
+                        <input type="text" id="numero" placeholder="Digite o Número"> 
+                    </div>
+
+                    <div class="campo">
+                        <Label>Cidade* </Label>
+                        <input type="text" id="cidade" placeholder="Digite a Cidade"> 
+                    </div>
+
+                    <div class="campo">
+                        <label for="uf">UF *</label>
+                        <select id="uf" name="uf" required>
+                            <option value="" disabled selected>Selecione o estado</option>
+                            <option value="AC">AC - Acre</option>
+                            <option value="AL">AL - Alagoas</option>
+                            <option value="AP">AP - Amapá</option>
+                            <option value="AM">AM - Amazonas</option>
+                            <option value="BA">BA - Bahia</option>
+                            <option value="CE">CE - Ceará</option>
+                            <option value="DF">DF - Distrito Federal</option>
+                            <option value="ES">ES - Espírito Santo</option>
+                            <option value="GO">GO - Goiás</option>
+                            <option value="MA">MA - Maranhão</option>
+                            <option value="MT">MT - Mato Grosso</option>
+                            <option value="MS">MS - Mato Grosso do Sul</option>
+                            <option value="MG">MG - Minas Gerais</option>
+                            <option value="PA">PA - Pará</option>
+                            <option value="PB">PB - Paraíba</option>
+                            <option value="PR">PR - Paraná</option>
+                            <option value="PE">PE - Pernambuco</option>
+                            <option value="PI">PI - Piauí</option>
+                            <option value="RJ">RJ - Rio de Janeiro</option>
+                            <option value="RN">RN - Rio Grande do Norte</option>
+                            <option value="RS">RS - Rio Grande do Sul</option>
+                            <option value="RO">RO - Rondônia</option>
+                            <option value="RR">RR - Roraima</option>
+                            <option value="SC">SC - Santa Catarina</option>
+                            <option value="SP">SP - São Paulo</option>
+                            <option value="SE">SE - Sergipe</option>
+                            <option value="TO">TO - Tocantins</option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <Label>Telefone* </Label>
+                    <input type="text" id="telefone" placeholder="(xx) xxxxx-xxxx">
+                </div>
+
+                <div class="campo">
+                    <Label>E-mail </Label>
+                    <input type="text" id="email" placeholder="Digite o E-mail">
+                </div>
+
+                <div class="campo">
+                    <Label>Tipo de Atendimento* </Label>
+                    <select id="atendimento">
+                        <option value="" disabled selected>Tipo de Atendimento</option>
+                        <option value="particular">Particular</option>
+                        <option value="SUS">SUS</option>
+                        <option value="convenio">Convênio Médico</option>
+                    </select>
+                </div>
+                <div class="botoes">
+                <button type="button" class="btn-cadastrar">
+                    Cadastrar
+                </button>
+                </div>
+                </div>
+            </div>
         <div class="atendimento">
             <h2>Gestão de Atendimentos</h2>
 
@@ -102,6 +191,13 @@
         </div>
 
      </main>
+
+     <script>
+        function proximaEtapa(){
+            document.getElementById("form1").style.display = "none";
+            document.getElementById("form2").style.display = "block";
+        }
+     </script>
 
 </body>
 </html>
