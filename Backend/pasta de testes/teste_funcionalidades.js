@@ -1,10 +1,10 @@
-import { cadastrarPacienteRecepcao } from "./scripts_features/func_paciente.js" ;
+import { cadastrarPacienteRecepcao } from "../scripts_features/func_paciente.js" ;
 
 
-import { cadastrarAtendimento } from "./scripts_features/func_atendimento.js" ;
+import { cadastrarAtendimento } from "../scripts_features/func_atendimento.js" ;
 
 
-import { banco } from "./banco_teste.js" ;
+import * as banco from "./banco_teste.js";
 
 
 // ==========================================================
@@ -16,7 +16,7 @@ const paciente = cadastrarPacienteRecepcao(
     "Maria da Silva",
     "15/08/1995",
     "12.345.678-9",
-    "52998224725",
+    "139.996.429-12",
     "Brasileira",
     "Solteiro",
     "Rua das Flores, 100",

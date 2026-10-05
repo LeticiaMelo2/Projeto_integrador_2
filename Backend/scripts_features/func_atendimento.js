@@ -1,7 +1,6 @@
 // ===== IMPORTS DE FUNÇÕES =====
 import { calcularIdade } from "./func_paciente.js";
-
-import banco from "..pasta de testes/banco_teste.js";
+import * as banco from "../pasta de testes/banco_teste.js";
 
 
 // ==========================================================
@@ -115,13 +114,15 @@ function cadastrarAtendimento(idPaciente, dataNascimento) {
         id_paciente: paciente.id_paciente,
         num_atendimento: numAtendimento,
         status: "AGUARDANDO_TRIAGEM",
-        nome_completo: idPaciente.nome_completo,
+        nome_completo: paciente.nome_completo,
         //data_nasc: dataNascimento,
         //nome_responsavel: idPaciente.nome_responsavel,
         //documento: documento,
     };
 
-    return atendimento;
+    const atendimentoCadastrado = banco.inserirAtendimento(atendimento);
+
+    return atendimentoCadastrado;
 }
 
 export {

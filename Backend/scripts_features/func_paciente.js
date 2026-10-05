@@ -1,5 +1,6 @@
 // ===== IMPORTS DE FUNÇÕES =====
-import { validarCPF } from"./scripts_features/func_cpf.js";
+import { validarCPF } from "./func_cpf.js";
+import * as banco from "../pasta de testes/banco_teste.js";
 // ==========================================================
 
 // ===== CHAMADA DO BANCO DE DADOS NOS ARQUIVOS DO BACK =====
@@ -45,7 +46,7 @@ function cadastrarPacienteRecepcao(nome_input, responsavel_input, data_nasc_inpu
         //idade: calcularIdade(data_nasc_formatada),
     };
 
-    const pacienteCadastrado = banco_dados.inserirPaciente(paciente);
+    const pacienteCadastrado = banco.inserirPaciente(paciente);
 
     return pacienteCadastrado;
 
@@ -74,7 +75,7 @@ function cadastrarPacienteRecepcao(nome_input, responsavel_input, data_nasc_inpu
     // }
 }
 
-async function mascaraDataNasc(params) {
+function mascaraDataNasc(params) {
     // Remove qualquer caractere que não seja número
     let data_formatada = params.replace(/\D/g, "");
 
@@ -89,7 +90,7 @@ async function mascaraDataNasc(params) {
     return data_formatada;
 }
 
-async function calcularIdade(data_nasc) {
+function calcularIdade(data_nasc) {
 
     const [dia, mes, ano] = data_nasc.split("/").map(Number);
     const nascimento =  new Date(ano, mes - 1, dia);

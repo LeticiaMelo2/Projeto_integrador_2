@@ -10,6 +10,7 @@
     "type": "git",
     "url": "git+https://github.com/LeticiaMelo2/Projeto_integrador_2.git"
   },
+  "type": "module",
   "keywords": [],
   "author": "",
   "license": "ISC",
