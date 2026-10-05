@@ -7,4 +7,4 @@ const pool = mysql.createPool({
   database: 'seu_banco'
 });
 
-module.exports = pool.promise();
+module.export = pool.promise();

@@ -1,15 +1,15 @@
 // Implementar lógica de validação de CPF
 
 function validarPrimDigito(cpfList) {
-    let cont = 0, soma = 0;   
-    
+    let cont = 0, soma = 0;
+
     for (let i = 10; i >= 2; i--) {
         soma += parseInt(cpfList[cont]) * i;
         /*console.log("cpf num: " + parseInt(cpfList[cont]));
         console.log("indice: " + i);console.log("soma: " + soma);*/
         cont++;
     }
-    
+
     let digito = 11 - (soma % 11);
     //console.log("primeiro digito: " + digito);
     return verificaCPF(digito, cpfList, 1);
@@ -33,7 +33,7 @@ function validarSegDigito(cpfList) {
 
 function verificaCPF(dig, listCpf, ordemDig) {
     let digitoCpf;
-    if (dig == 10 || dig == 11) {   
+    if (dig == 10 || dig == 11) {
         digitoCpf = 0;
     } else {
         digitoCpf = dig;
@@ -61,8 +61,6 @@ function verificaCPF(dig, listCpf, ordemDig) {
     }
 }
 
-
-
 function validarCPF(cpf) {
     // Remove qualquer caractere que não seja número
     cpf = cpf.replace(/\D/g, "");
@@ -80,14 +78,16 @@ function validarCPF(cpf) {
     let segValido = validarSegDigito(listCpf);
 
     if (primValido && segValido) {
-        console.log("CPF Correto!");
-
-        listCpf = listCpf.join("");
-        return listCpf;
+        return {
+            sucesso: true,
+            dados: listCpf.join("") // transforma o CPF validado como uma string
+        };
     } else {
-        console.log("CPF Inválido!");
-        return false;
+        return {
+            sucesso: false,
+            erro: "CPF inválido"
+        };
     }
 }
 
-module.exports = { validarCPF };
+export { validarCPF };
