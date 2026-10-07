@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro do Paciente</title>
+    
+    <!-- Biblioteca de ícones -->
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    
+    <!-- Fonte Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../static/styles.css">
+
+</head>
+<body>
+
+    <header class="cabecalho-principal">
+        <div class="logo-sistema">
+            <i class="bx bx-plus-medical"></i>
+            <span>Triagem<span class="destaque-logo">+</span></span>
+        </div>
+
+        <nav>
+            <ul class="menu-navegacao">
+                <li><a href="#" class="item-menu-ativo"><i class="bx bx-user-plus"></i> Cadastro</a></li>
+                <li><a href="#"><i class="bx bx-spreadsheet"></i> Triagem</a></li>
+                <li><a href="#"><i class="bx bx-first-aid"></i> Atendimento</a></li>
+                <li><a href="#"><i class="bx bx-bar-chart-alt-2"></i> Relatórios</a></li>
+            </ul>
+        </nav>
+
+        <div class="indicador-seguranca">
+            <i class="bx bx-shield-quarter"></i>
+            <span>Sistema Protegido</span>
+        </div>
+    </header>
+
+    <main class="area-conteudo">
+        
+        <header class="cabecalho-pagina">
+            <div>
+                <h1>Cadastro do Paciente</h1>
+                <p class="subtitulo-pagina">Registre ou gerencie prontuários e atendimentos no sistema.</p>
+            </div>
+        </header>
+
+        <section class="cartao-container">
+            
+            <div class="passos-progresso">
+                <div class="etapa-passo etapa-ativa" id="step-1-indicator">
+                    <span class="numero-etapa">1</span>
+                    <span class="titulo-etapa">Dados do Paciente</span>
+                </div>
+                <div class="linha-conector"></div>
+                <div class="etapa-passo" id="step-2-indicator">
+                    <span class="numero-etapa">2</span>
+                    <span class="titulo-etapa">Contato e Endereço</span>
+                </div>
+            </div>
+
+            <div class="formulario-etapa" id="form1">
+                <h2><i class="bx bx-id-card"></i> Dados Pessoais</h2>
+                
+                <div class="grade-formulario">
+                    <div class="campo-input campo-largura-total">
+                        <label for="name">Nome Completo <span class="campo-obrigatorio">*</span></label>
+                        <input id="name" type="text" placeholder="Digite o nome completo" required>
+                    </div>
+
+                    <div class="campo-input">
+                        <label for="dataNascimento">Data de Nascimento <span class="campo-obrigatorio">*</span></label>
+                        <input type="date" id="dataNascimento" required>
+                    </div>
+                    
+                    <div class="campo-input">
+                        <label for="rg">RG <span class="campo-obrigatorio">*</span></label>
+                        <input type="text" id="rg" placeholder="Digite o RG" required>
+                    </div>  
+                    
+                    <div class="campo-input">
+                        <label for="cpf">CPF <span class="campo-obrigatorio">*</span></label>
+                        <input type="text" id="cpf" placeholder="000.000.000-00" required>
+                    </div>
+
+                    <div class="campo-input">
+                        <label for="nome-mae">Nome da Mãe <span class="campo-obrigatorio">*</span></label>
+                        <input type="text" id="nome-mae" placeholder="Digite o nome da mãe" required>
+                    </div>
+
+                    <div class="campo-input">
+                        <label for="nome-pai">Nome do Pai</label>
+                        <input type="text" id="nome-pai" placeholder="Digite o nome do pai">
+                    </div>
+
+                    <div class="campo-input">
+                        <label for="sexo">Sexo <span class="campo-obrigatorio">*</span></label>
+                        <select id="sexo" required>
+                            <option value="" disabled selected>Selecione uma opção</option>
+                            <option value="masculino">Masculino</option>
+                            <option value="feminino">Feminino</option>
+                            <option value="outro">Outro</option>
+                            <option value="nao_informar">Prefiro não informar</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="painel-botoes alinhar-direita">
+                    <button type="button" class="botao botao-primario" onclick="proximaEtapa()">
+                        Próximo <i class="bx bx-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="formulario-etapa" id="form2" style="display: none;">
+                <h2><i class="bx bx-map-pin"></i> Contato e Endereço</h2>
+
+                <div class="grade-formulario">
+                    <div class="campo-input">
+                        <label for="CEP">CEP <span class="campo-obrigatorio">*</span></label>
+                        <input type="text" id="CEP" placeholder="00000-000">
+                    </div>
+
+                    <div class="campo-input campo-largura-dupla">
+                        <label for="Logradouro">Logradouro <span class="campo-obrigatorio">*</span></label>
+                        <input type="text" id="Logradouro" placeholder="Rua, Avenida, etc."> 
+                    </div>
+
+                    <div class="campo-input">
+                        <label for="numero">Número <span class="campo-obrigatorio">*</span></label>
+                        <input type="text" id="numero" placeholder="Nº"> 
+                    </div>
+
+                    <div class="campo-input">
+                        <label for="Bairro">Bairro <span class="campo-obrigatorio">*</span></label>
+                        <input type="text" id="Bairro" placeholder="Digite o Bairro"> 
+                    </div>
+
+                    <div class="campo-input">
+                        <label for="cidade">Cidade <span class="campo-obrigatorio">*</span></label>
+                        <input type="text" id="cidade" placeholder="Digite a Cidade"> 
+                    </div>
+
+                    <div class="campo-input">
+                        <label for="uf">UF <span class="campo-obrigatorio">*</span></label>
+                        <select id="uf" name="uf" required>
+                            <option value="" disabled selected>Selecione</option>
+                            <option value="AC">AC - Acre</option>
+                            <option value="AL">AL - Alagoas</option>
+                            <option value="AP">AP - Amapá</option>
+                            <option value="AM">AM - Amazonas</option>
+                            <option value="BA">BA - Bahia</option>
+                            <option value="CE">CE - Ceará</option>
+                            <option value="DF">DF - Distrito Federal</option>
+                            <option value="ES">ES - Espírito Santo</option>
+                            <option value="GO">GO - Goiás</option>
+                            <option value="MA">MA - Maranhão</option>
+                            <option value="MT">MT - Mato Grosso</option>
+                            <option value="MS">MS - Mato Grosso do Sul</option>
+                            <option value="MG">MG - Minas Gerais</option>
+                            <option value="PA">PA - Pará</option>
+                            <option value="PB">PB - Paraíba</option>
+                            <option value="PR">PR - Paraná</option>
+                            <option value="PE">PE - Pernambuco</option>
+                            <option value="PI">PI - Piauí</option>
+                            <option value="RJ">RJ - Rio de Janeiro</option>
+                            <option value="RN">RN - Rio Grande do Norte</option>
+                            <option value="RS">RS - Rio Grande do Sul</option>
+                            <option value="RO">RO - Rondônia</option>
+                            <option value="RR">RR - Roraima</option>
+                            <option value="SC">SC - Santa Catarina</option>
+                            <option value="SP">SP - São Paulo</option>
+                            <option value="SE">SE - Sergipe</option>
+                            <option value="TO">TO - Tocantins</option>
+                        </select>
+                    </div>
+
+                    <div class="campo-input">
+                        <label for="telefone">Telefone <span class="campo-obrigatorio">*</span></label>
+                        <input type="tel" id="telefone" placeholder="(00) 00000-0000">
+                    </div>
+
+                    <div class="campo-input">
+                        <label for="email">E-mail</label>
+                        <input type="email" id="email" placeholder="exemplo@email.com">
+                    </div>
+
+                    <div class="campo-input">
+                        <label for="atendimento">Tipo de Atendimento <span class="campo-obrigatorio">*</span></label>
+                        <select id="atendimento">
+                            <option value="" disabled selected>Selecione o tipo</option>
+                            <option value="particular">Particular</option>
+                            <option value="SUS">SUS</option>
+                            <option value="convenio">Convênio Médico</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="painel-botoes espaco-entre">
+                    <button type="button" class="botao botao-secundario" onclick="etapaAnterior()">
+                        <i class="bx bx-chevron-left"></i> Voltar
+                    </button>
+                    <button type="button" class="botao botao-sucesso" onclick="cadastrar()">
+                        <i class="bx bx-check"></i> Finalizar Cadastro
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section class="cartao-container">
+            <div class="cabecalho-cartao">
+                <h2><i class="bx bx-list-ul"></i> Gestão de Atendimentos Recentes</h2>
+            </div>
+
+            <div class="tabela-responsiva">
+                <table class="tabela-dados">
+                    <thead>
+                        <tr>
+                            <th>Nº Atendimento</th>
+                            <th>Paciente</th>
+                            <th>Tipo</th>
+                            <th>Situação</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>#1042</strong></td>
+                            <td>Maria Silva Santos</td>
+                            <td><span class="etiqueta etiqueta-informacao">SUS</span></td>
+                            <td><span class="status-atendimento status-aguardando">Aguardando Triagem</span></td>
+                            <td>
+                                <button class="botao-icone" title="Editar"><i class="bx bx-edit-alt"></i></button>
+                                <button class="botao-icone" title="Ver Detalhes"><i class="bx bx-show"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        function proximaEtapa() {
+            const form1 = document.getElementById('form1');
+            const obrigatorios = form1.querySelectorAll('[required]');
+            let valido = true;
+
+            obrigatorios.forEach(input => {
+                if (!input.value.trim()) {
+                    input.style.borderColor = '#ef4444';
+                    valido = false;
+                } else {
+                    input.style.borderColor = '#cbd5e1';
+                }
+            });
+
+            if (!valido) {
+                alert('Preencha os campos obrigatórios (*) do Passo 1.');
+                return;
+            }
+
+            document.getElementById('form1').style.display = 'none';
+            document.getElementById('form2').style.display = 'block';
+            document.getElementById('step-1-indicator').classList.remove('etapa-ativa');
+            document.getElementById('step-2-indicator').classList.add('etapa-ativa');
+        }
+
+        function etapaAnterior() {
+            document.getElementById('form2').style.display = 'none';
+            document.getElementById('form1').style.display = 'block';
+            document.getElementById('step-2-indicator').classList.remove('etapa-ativa');
+            document.getElementById('step-1-indicator').classList.add('etapa-ativa');
+        }
+
+        function cadastrar() {
+            const form2 = document.getElementById('form2');
+            const obrigatorios = form2.querySelectorAll('[required]');
+            let valido = true;
+
+            obrigatorios.forEach(input => {
+                if (!input.value.trim()) {
+                    input.style.borderColor = '#ef4444';
+                    valido = false;
+                } else {
+                    input.style.borderColor = '#cbd5e1';
+                }
+            });
+
+            if (!valido) {
+                alert('Preencha os campos obrigatórios (*) do Endereço/Contato.');
+                return;
+            }
+
+            const nome = document.getElementById('name').value;
+            alert(`Paciente ${nome} cadastrado com sucesso!`);
+        }
+    </script>
+</body>
+</html>
