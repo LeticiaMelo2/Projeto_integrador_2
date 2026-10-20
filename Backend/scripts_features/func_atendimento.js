@@ -1,6 +1,7 @@
 // ===== IMPORTS DE FUNÇÕES =====
 import { calcularIdade } from "./func_paciente.js";
 import * as banco from "../pasta de testes/banco_teste.js";
+import db from "../scripts_integracao/conexao_banco.js";
 
 
 // ==========================================================
@@ -17,42 +18,7 @@ const app = express();*/
 let contadorAtendimento = 1; // Contador para o número de atendimento - num de atendimento é uma sequencia
 // ==========================================================
 
-// async function cadastrarAtendimento(nome_paciente, responsavel_paciente, data_nasc_paciente, rg_paciente, cpf_paciente, tipo_doc_paciente, numAtendimento_paciente) {
 
-//     let atendimento = {
-//         nome_completo: nome_paciente,
-//         nome_responsavel: responsavel_paciente,
-//         data_nasc: data_nasc_paciente,
-//         rg: rg_paciente,
-//         cpf: cpf_paciente, // Use o CPF validado
-//         tipo_doc: tipo_doc_paciente,
-//         num_atendimento: await criacaoNumAtendimento(await calcularIdade(data_nasc_paciente), "recepcao"), // Adiciona o número de atendimento ao objeto paciente
-//     };
-
-//     try {
-//         const envio_banco = await fetch("http://localhost:3000/pacientes", {
-//             method: "POST",
-//             headers: {
-//                 "Content-Type": "application/json",
-//             },
-//             body: JSON.stringify(atendimento), // Transforma o objeto "atendimento" em texto JSON
-//         });
-
-//         const dados = await envio_banco.json();
-
-//         if (envio_banco.ok) {
-//             alert("atendimento cadastrado com sucesso!");
-//             return dados;
-//         } else {
-//             alert("Erro no cadastro: " + dados.erro);
-//         }
-//     } catch (error) {
-//         console.error("Erro ao cadastrar atendimento:", error);
-//         alert(
-//             "Erro ao cadastrar atendimento. Verifique o console para mais detalhes.",
-//         );
-//     }
-// }
 
 
 async function criacaoNumAtendimento(idade, etapa = "recepcao") {

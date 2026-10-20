@@ -1,4 +1,4 @@
-import { cadastrarPacienteRecepcao } from "../scripts_features/func_paciente.js" ;
+import {   } from "../scripts_features/func_paciente.js" ;
 
 
 import { cadastrarAtendimento } from "../scripts_features/func_atendimento.js" ;
@@ -11,7 +11,7 @@ import * as banco from "./banco_teste.js";
 // 1. CADASTRAR UM PACIENTE
 // ==========================================================
 
-const paciente = cadastrarPacienteRecepcao(
+const paciente =  (
     "João da Silva",
     "Maria da Silva",
     "15/08/1995",
