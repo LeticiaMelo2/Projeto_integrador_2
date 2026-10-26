@@ -1,5 +1,3 @@
-export default pool.promise();
-
 import 'dotenv/config';
 import mysql from 'mysql2/promise';
 
@@ -21,4 +19,4 @@ async function getConnection() {
     return connection;
   }
 
-export { getConnection };
+export default{ getConnection };
