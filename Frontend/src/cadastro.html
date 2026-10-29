@@ -13,7 +13,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="../static/styles.css">
+    <link rel="stylesheet" href="../style/style.css">
 
 </head>
 <body>
@@ -190,13 +190,56 @@
 
                     <div class="campo-input">
                         <label for="atendimento">Tipo de Atendimento <span class="campo-obrigatorio">*</span></label>
-                        <select id="atendimento">
+                        <select id="atendimento" onchange="verificarAtendimento()">
                             <option value="" disabled selected>Selecione o tipo</option>
                             <option value="particular">Particular</option>
                             <option value="SUS">SUS</option>
                             <option value="convenio">Convênio Médico</option>
                         </select>
                     </div>
+
+                    <div class="campo-input" id="grupo-convenio" style="display: none;">
+                        <label for="plano">Convênio Médico</label>
+                        <input list="planos-saude" id="plano" name="plano" placeholder="Selecione o Convênio:">
+                        <datalist id="planos-saude">
+                            <option value="Alice Saúde">
+                            <option value="Ameplan Saúde">
+                            <option value="Amil">
+                            <option value="Amil One">
+                            <option value="Assim Saúde">
+                            <option value="Biovida Saúde">
+                            <option value="Bradesco Saúde">
+                            <option value="Camed Saúde">
+                            <option value="Care Plus">
+                            <option value="CCG Saúde">
+                            <option value="Clinipam">
+                            <option value="Cruz Azul Saúde">
+                            <option value="Doctor Clin">
+                            <option value="Golden Cross">
+                            <option value="Hapvida">
+                            <option value="Humana Saúde">
+                            <option value="NotreDame Intermédica (GNDI)">
+                            <option value="Plena Saúde">
+                            <option value="Porto Saúde">
+                            <option value="Prevent Senior">
+                            <option value="Promed Assistência Médica">
+                            <option value="Sami Saúde">
+                            <option value="SAMP Minas">
+                            <option value="Santa Helena Saúde">
+                            <option value="São Cristóvão Saúde">
+                            <option value="Seguros Unimed">
+                            <option value="SulAmérica Saúde">
+                            <option value="Trasmontano Saúde">
+                            <option value="Unimed BH">
+                            <option value="Unimed Campinas">
+                            <option value="Unimed Curitiba">
+                            <option value="Unimed Nacional">
+                            <option value="Unimed Porto Alegre">
+                            <option value="Unimed Rio / Ferj">
+                            <option value="Vitallis / MediSanitas">
+                        </datalist>
+                    </div>
+
                 </div>
 
                 <div class="painel-botoes espaco-entre">
@@ -235,6 +278,7 @@
                             <td>
                                 <button class="botao-icone" title="Editar"><i class="bx bx-edit-alt"></i></button>
                                 <button class="botao-icone" title="Ver Detalhes"><i class="bx bx-show"></i></button>
+                                <button class="botao-icone" title="Cancelar"><i class="bx bx-x"></i></button>
                             </td>
                         </tr>
                     </tbody>
@@ -243,6 +287,9 @@
         </section>
 
     </main>
+
+    <script src="../../Backend/scripts_features/func_cep.js"></script>
+    <script src="../scripts_front/func_validacoes.js"></script>
 
     <script>
         function proximaEtapa() {
@@ -275,6 +322,19 @@
             document.getElementById('form1').style.display = 'block';
             document.getElementById('step-2-indicator').classList.remove('etapa-ativa');
             document.getElementById('step-1-indicator').classList.add('etapa-ativa');
+        }
+
+        function verificarAtendimento() {
+            const tipoAtendimento = document.getElementById('atendimento').value;
+            const grupoConvenio = document.getElementById('grupo-convenio');
+            const inputPlano = document.getElementById('plano');
+
+            if (tipoAtendimento === 'convenio') {
+            grupoConvenio.style.display = ''; 
+            } else {
+            grupoConvenio.style.display = 'none';  
+            inputPlano.value = '';                 
+            }
         }
 
         function cadastrar() {
