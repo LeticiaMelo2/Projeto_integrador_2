@@ -1,3 +1,6 @@
+//configura Express, JSON, rotas e erros
+
+
 import 'dotenv/config';
 import express from 'express';
 import { getConnection } from '../scripts_integracao/conexao.js';

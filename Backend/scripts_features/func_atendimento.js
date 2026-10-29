@@ -1,17 +1,10 @@
 // ===== IMPORTS DE FUNÇÕES =====
 import { calcularIdade } from "./func_paciente.js";
 import * as banco from "../pasta de testes/banco_teste.js";
-import db from "../scripts_integracao/conexao_banco.js";
-
+import { getConnection } from "../scripts_integracao/conexao_banco.js";
 
 // ==========================================================
 
-// ===== CHAMADA DO BANCO DE DADOS NOS ARQUIVOS DO BACK =====
-/*const express = require("express");
-const cors = require("cors"); // Necessário para permitir que o frontend converse com o backend
-const banco_dados = require("../scripts_integracao/conexao");
-
-const app = express();*/
 // ==========================================================
 
 // ===== Variáveis de uso global =====

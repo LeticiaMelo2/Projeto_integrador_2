@@ -1,6 +1,6 @@
 // ===== IMPORTS DE FUNÇÕES =====
 import { validarCPF } from "./func_cpf.js";
-import * as banco from "../pasta de testes/banco_teste.js";
+import { getConnection } from "../scripts_integracao/conexao_banco.js";
 // ==========================================================
 
 // ===== CHAMADA DO BANCO DE DADOS NOS ARQUIVOS DO BACK =====
