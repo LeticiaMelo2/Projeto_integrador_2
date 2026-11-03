@@ -17,5 +17,10 @@
   "bugs": {
     "url": "https://github.com/LeticiaMelo2/Projeto_integrador_2/issues"
   },
-  "homepage": "https://github.com/LeticiaMelo2/Projeto_integrador_2#readme"
+  "homepage": "https://github.com/LeticiaMelo2/Projeto_integrador_2#readme",
+  "dependencies": {
+    "dotenv": "^18.0.8",
+    "express": "^5.3.0",
+    "mysql2": "^3.24.6"
+  }
 }

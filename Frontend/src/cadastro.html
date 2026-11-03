@@ -7,6 +7,7 @@
     
     <!-- Biblioteca de ícones -->
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- Fonte Google -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -26,17 +27,23 @@
 
         <nav>
             <ul class="menu-navegacao">
-                <li><a href="#" class="item-menu-ativo"><i class="bx bx-user-plus"></i> Cadastro</a></li>
-                <li><a href="#"><i class="bx bx-spreadsheet"></i> Triagem</a></li>
+                <li><a href="cadastro.html" class="item-menu-ativo"><i class="bx bx-user-plus"></i> Cadastro</a></li>
+                <li><a href="painel_triagem.html"><i class="bx bx-spreadsheet"></i> Triagem</a></li>
                 <li><a href="#"><i class="bx bx-first-aid"></i> Atendimento</a></li>
                 <li><a href="#"><i class="bx bx-bar-chart-alt-2"></i> Relatórios</a></li>
             </ul>
         </nav>
 
-        <div class="indicador-seguranca">
-            <i class="bx bx-shield-quarter"></i>
-            <span>Sistema Protegido</span>
+        <!-- Identificação do Profissional -->
+        <div class="card-usuario-header">
+            <i class="fa-solid fa-user-nurse icone-enfermeira"></i>
+            <div>
+                <p class="nome-enfermeira">Enfª. Maria Silva</p>
+                <p class="coren-enfermeira">COREN-SP: 123456</p>
+            </div>
         </div>
+    </header>
+
     </header>
 
     <main class="area-conteudo">

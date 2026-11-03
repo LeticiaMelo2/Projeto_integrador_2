@@ -34,7 +34,6 @@ const paciente = cadastrarPacienteRecepcao(
 
 const atendimento1 = cadastrarAtendimento(paciente.id_paciente);
 
-
 const atendimento2 = cadastrarAtendimento(paciente.id_paciente);
 
 
