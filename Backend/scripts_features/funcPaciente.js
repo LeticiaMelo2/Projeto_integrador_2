@@ -1,3 +1,6 @@
+
+import getConnection from '../scripts_integracao/conexaoBD.js';
+
 //funções para o manipulação de pacientes
 
 export async function consultarPaciente(id) {
@@ -6,7 +9,7 @@ export async function consultarPaciente(id) {
 
 export async function incluirPaciente(dados) {
     // Implementação para incluir paciente
-    
+
 
 
 }

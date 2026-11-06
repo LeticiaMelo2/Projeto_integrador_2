@@ -1,3 +1,5 @@
+import getConnection from '../scripts_integracao/conexaoBD.js';
+
 //funções para a manipulação de atendimentos
 
 

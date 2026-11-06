@@ -1,3 +1,5 @@
+import getConnection from '../scripts_integracao/conexaoBD.js';
+
 //funções para manipulação de prontuários
 
 export async function consultarProntuario(id) {
