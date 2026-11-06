@@ -266,17 +266,33 @@ body {
     min-height: 100vh;
 }
 
+/* Correção definitiva para o cabeçalho principal */
 .cabecalho-principal {
-    background-color: #123b63;
-    color: #ffffff;
-    padding: 14px 40px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    position: sticky;
-    top: 0;
-    z-index: 100;
+    background-color: #123b63 !important;
+    color: #ffffff !important;
+    padding: 14px 40px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 100 !important;
+}
+
+.cabecalho-principal nav {
+    display: flex !important;
+    align-items: center !important;
+}
+
+.menu-navegacao {
+    display: flex !important;
+    list-style: none !important;
+    gap: 12px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    align-items: center !important;
 }
 
 .logo-sistema {
@@ -619,3 +635,461 @@ body {
     .campo-largura-total, .campo-largura-dupla { grid-column: span 2; }
     .indicador-seguranca { display: none; }
 }
+
+
+
+/*psinel triagem*/
+/* ============================================================
+   ESTILOS DO PAINEL DE CHAMADA E FILA DE ATENDIMENTO
+   ============================================================ */
+
+/* Topo Escuro de Navegação */
+.header-topo {
+    background-color: #0d2847;
+    color: #ffffff;
+    padding: 12px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.header-nav {
+    display: flex;
+    gap: 6px;
+}
+
+.header-nav a {
+    color: #ffffff;
+    text-decoration: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.header-nav a.ativo {
+    background-color: #0284c7;
+    font-weight: 600;
+}
+
+.header-user {
+    text-align: right;
+    font-size: 12px;
+    line-height: 1.3;
+}
+
+.header-user span {
+    color: #94a3b8;
+}
+
+/* Area Centralizada com Largura Ampliada */
+.conteudo-principal {
+    width: 100%;
+    max-width: 1050px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+/* Cards Compactos do Painel */
+.cards-container {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.card-box {
+    width: 210px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-left: 4px solid #0284c7;
+    border-radius: 6px;
+    padding: 10px 14px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-box.verde {
+    border-left-color: #10b981;
+}
+
+.card-box p {
+    font-size: 11px;
+    text-transform: uppercase;
+    color: #64748b;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    margin: 0;
+}
+
+.card-box h3 {
+    font-size: 20px;
+    color: #0f172a;
+    font-weight: 700;
+    margin: 0;
+}
+
+/* Tabela em Destaque */
+.tabela-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.tabela-titulo {
+    padding: 16px 24px;
+    font-size: 17px;
+    font-weight: 700;
+    color: #0f172a;
+    border-bottom: 1px solid #e2e8f0;
+    background-color: #ffffff;
+}
+
+.tabela-dados {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 15px;
+    text-align: left;
+}
+
+.tabela-dados th {
+    background-color: #012f46;
+    color: #ffffff;
+    padding: 14px 20px;
+    font-weight: 600;
+}
+
+.tabela-dados td {
+    padding: 16px 20px;
+    border-bottom: 1px solid #f1f5f9;
+    color: #334155;
+}
+
+.tabela-dados tr:hover {
+    background-color: #f8fafc;
+}
+
+.tabela-dados tr:last-child td {
+    border-bottom: none;
+}
+
+.btn-chamar-paciente {
+    background-color: #0284c7;
+    color: #ffffff;
+    border: none;
+    padding: 9px 20px;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.2s;
+}
+
+.btn-chamar-paciente:hover {
+    background-color: #0369a1;
+}
+
+.coluna-acao-painel {
+    text-align: right !important;
+    padding-right: 20px !important;
+}
+
+/* Banner de Identificacao na Tela de Triagem */
+.banner-paciente-ativo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f0f9ff;
+    border: 1px solid #bae6fd;
+    border-left: 5px solid #0284c7;
+    padding: 12px 18px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.banner-paciente-ativo .label {
+    font-size: 11px;
+    text-transform: uppercase;
+    color: #0369a1;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    display: block;
+    margin-bottom: 2px;
+}
+
+.banner-paciente-ativo .nome {
+    font-size: 16px;
+    color: #0f172a;
+    font-weight: 700;
+}
+
+.banner-paciente-ativo .tag-fase {
+    background-color: #0284c7;
+    color: #ffffff;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+/* triagem */ 
+
+/* ============================================================
+   ESTILOS DA TELA DE TRIAGEM
+   ============================================================ */
+
+.card-usuario-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+}
+
+.icone-enfermeira {
+    color: #5eead4;
+    font-size: 18px;
+}
+
+.nome-enfermeira {
+    font-weight: 600;
+    line-height: 1;
+    margin: 0;
+}
+
+.coren-enfermeira {
+    font-size: 11px;
+    color: #bfdbfe;
+    margin: 2px 0 0 0;
+}
+
+.grid-triagem {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 24px;
+}
+
+/* Card do Paciente (Esquerda) */
+.cartao-paciente {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.bloco-identificacao {
+    margin-bottom: 20px;
+}
+
+.bloco-identificacao h3 {
+    font-size: 20px;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 6px 0 2px 0;
+}
+
+.subtexto-paciente {
+    font-size: 13px;
+    color: #64748b;
+    margin: 0;
+}
+
+.box-info-paciente {
+    background-color: #f8fafc;
+    padding: 16px;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    font-size: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.box-info-paciente p {
+    margin: 0;
+}
+
+.etiqueta-alergia {
+    background-color: #fee2e2;
+    color: #991b1b;
+}
+
+.box-alerta-atencao {
+    margin-top: 20px;
+    padding: 12px;
+    background-color: #fef3c7;
+    border-left: 4px solid #f59e0b;
+    border-radius: 0 12px 12px 0;
+    font-size: 13px;
+    color: #92400e;
+}
+
+.box-alerta-atencao p {
+    margin: 0;
+}
+
+/* Formulário e Sinais Vitais (Direita) */
+.icone-coracao {
+    color: #ef4444;
+}
+
+.box-sinais-vitais {
+    background-color: #f8fafc;
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    margin-bottom: 16px;
+}
+
+.rotulo-secao {
+    margin-bottom: 12px;
+    display: block;
+    font-size: 15px;
+    color: #123b63;
+    font-weight: 600;
+}
+
+.grid-sinais {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+
+.grid-sinais .caixa-texto {
+    padding-left: 1rem;
+}
+
+.subtexto-queixas {
+    font-size: 13px;
+    color: #64748b;
+    margin-bottom: 8px;
+}
+
+.grid-queixas {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.grid-queixas .check-card {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.textarea-obs {
+    padding-left: 1rem;
+    resize: vertical;
+    width: 100%;
+}
+
+/* Botões do Protocolo de Manchester */
+.grid-manchester {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+    margin-top: 6px;
+}
+
+.btn-manchester {
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    text-align: center;
+    transition: transform 0.1s, filter 0.2s;
+}
+
+.btn-manchester:hover {
+    filter: brightness(0.95);
+    transform: translateY(-1px);
+}
+
+.btn-manchester strong {
+    display: block;
+    font-size: 12px;
+}
+
+.btn-manchester small {
+    font-size: 10px;
+}
+
+.btn-manchester.vermelho { border: 2px solid #ef4444; background: #fef2f2; }
+.btn-manchester.vermelho strong { color: #b91c1c; }
+.btn-manchester.vermelho small { color: #7f1d1d; }
+
+.btn-manchester.laranja { border: 2px solid #f97316; background: #fff7ed; }
+.btn-manchester.laranja strong { color: #c2410c; }
+.btn-manchester.laranja small { color: #7c2d12; }
+
+.btn-manchester.amarelo { border: 2px solid #eab308; background: #fefce8; }
+.btn-manchester.amarelo strong { color: #a16207; }
+.btn-manchester.amarelo small { color: #713f12; }
+
+.btn-manchester.verde { border: 2px solid #22c55e; background: #f0fdf4; }
+.btn-manchester.verde strong { color: #15803d; }
+.btn-manchester.verde small { color: #14532d; }
+
+.btn-manchester.azul { border: 2px solid #3b82f6; background: #eff6ff; }
+.btn-manchester.azul strong { color: #1d4ed8; }
+.btn-manchester.azul small { color: #1e3a8a; }
+
+/* Painel de Confirmação do Manchester */
+.painel-confirmacao {
+    display: none;
+    margin-top: 12px;
+    padding: 12px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.badge-tempo {
+    padding: 4px 8px;
+    background: #ffffff;
+    border-radius: 6px;
+    font-size: 12px;
+}
+
+.painel-confirmacao.selecionado-vermelho { background-color: #fee2e2; color: #991b1b; border: 1px solid #f87171; }
+.painel-confirmacao.selecionado-laranja { background-color: #ffedd5; color: #9a3412; border: 1px solid #fb923c; }
+.painel-confirmacao.selecionado-amarelo { background-color: #fef9c3; color: #854d0e; border: 1px solid #facc15; }
+.painel-confirmacao.selecionado-verde { background-color: #dcfce7; color: #166534; border: 1px solid #4ade80; }
+.painel-confirmacao.selecionado-azul { background-color: #dbeafe; color: #1e40af; border: 1px solid #60a5fa; }
+
+/* Mensagem de Alerta do Formulário */
+.alerta-form {
+    display: none;
+    padding: 12px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.alerta-form.erro { background-color: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; }
+.alerta-form.sucesso { background-color: #d1fae5; color: #065f46; border: 1px solid #6ee7b7; }

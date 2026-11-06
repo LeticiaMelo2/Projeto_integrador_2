@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Triagem - Sistema Hospitalar</title>
+    
+    <!-- Ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    
+
+    <link rel="stylesheet" href="../style/style.css">
+</head>
+<body>
+
+    <header class="cabecalho-principal">
+        <div class="logo-sistema">
+            <i class="bx bx-plus-medical"></i>
+            <span>Triagem<span class="destaque-logo">+</span></span>
+        </div>
+
+        <nav>
+            <ul class="menu-navegacao">
+                <li><a href="cadastro.html"><i class="bx bx-user-plus"></i> Cadastro</a></li>
+                <li><a href="painel_triagem.html"><i class="bx bx-spreadsheet"></i> Painel</a></li>
+                <li><a href="triagem.html" class="item-menu-ativo"><i class="bx bx-first-aid"></i> Triagem</a></li>
+                <li><a href="#"><i class="bx bx-first-aid"></i> Atendimento</a></li>
+                <li><a href="#"><i class="bx bx-bar-chart-alt-2"></i> Relatórios</a></li>
+            </ul>
+        </nav>
+
+        <!-- Identificação do Profissional -->
+        <div class="card-usuario-header">
+            <i class="fa-solid fa-user-nurse icone-enfermeira"></i>
+            <div>
+                <p class="nome-enfermeira">Enfª. Maria Silva</p>
+                <p class="coren-enfermeira">COREN-SP: 123456</p>
+            </div>
+        </div>
+    </header>
+
+    <main class="area-conteudo">
+
+        <div class="cabecalho-pagina">
+            <h1>Atendimento e Triagem de Enfermagem</h1>
+            <p class="subtitulo-pagina">Preencha os sinais vitais e defina a prioridade baseada no Protocolo de Manchester.</p>
+        </div>
+
+        <div class="grid-triagem">
+
+            <!-- Dados do Paciente-->
+            <div class="cartao-paciente">
+                <div class="bloco-identificacao">
+                    <h3 id="paciente-nome"></h3>
+                    <p id="paciente-detalhes" class="subtexto-paciente"></p>
+                </div>
+
+                <div class="box-info-paciente">
+                    <p><strong>Horário Chamada:</strong> <span id="paciente-hora">--:--</span></p>
+                    <p><strong>Acompanhante:</strong> <span id="paciente-acompanhante">Não informado</span></p>
+                    <p><strong>Alergias:</strong> <span id="paciente-alergias" class="etiqueta etiqueta-alergia">Nenhuma</span></p>
+                </div>
+
+                <div class="box-alerta-atencao">
+                    <p><strong>⚠️ Atenção:</strong> Verifique o histórico de alergias e meça os sinais vitais com precisão antes de classificar.</p>
+                </div>
+            </div>
+
+            <!--Formulário de Triagem -->
+            <div class="cartao-container">
+                <div class="cabecalho-cartao">
+                    <h2><i class="fa-solid fa-heart-pulse icone-coracao"></i> Registro de Sinais Vitais e Sintomas</h2>
+                </div>
+
+                <form id="formTriagem" class="formulario">
+
+                    <div class="box-sinais-vitais">
+                        <label class="rotulo-secao">1. Sinais Vitais do Paciente</label>
+                        
+                        <div class="grid-sinais">
+                            <div class="campo-grupo">
+                                <label class="rotulo-campo">Pressão Arterial</label>
+                                <input type="text" id="pa" placeholder="ex: 120/80" class="caixa-texto" required>
+                            </div>
+                            <div class="campo-grupo">
+                                <label class="rotulo-campo">Temperatura (°C)</label>
+                                <input type="number" step="0.1" id="temp" placeholder="ex: 37.5" class="caixa-texto" required>
+                            </div>
+                            <div class="campo-grupo">
+                                <label class="rotulo-campo">Freq. Cardíaca (BPM)</label>
+                                <input type="number" id="bpm" placeholder="ex: 80" class="caixa-texto" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="campo-grupo">
+                        <label class="rotulo-campo">2. Principais Queixas do Paciente</label>
+                        <p class="subtexto-queixas">Selecione os sintomas informados:</p>
+
+                        <div class="grid-queixas">
+                            <label class="check-card">
+                                <input type="checkbox" value="Dor de cabeça" class="queixa-check"> Dor de Cabeça
+                            </label>
+                            <label class="check-card">
+                                <input type="checkbox" value="Náusea / Enjoo" class="queixa-check"> Náusea / Enjoo
+                            </label>
+                            <label class="check-card">
+                                <input type="checkbox" value="Dor muscular" class="queixa-check"> Dor Muscular
+                            </label>
+                            <label class="check-card">
+                                <input type="checkbox" value="Suor excessivo" class="queixa-check"> Suor Excessivo
+                            </label>
+                            <label class="check-card">
+                                <input type="checkbox" value="Falta de ar" class="queixa-check"> Falta de Ar
+                            </label>
+                            <label class="check-card">
+                                <input type="checkbox" value="Dor no peito" class="queixa-check"> Dor no Peito
+                            </label>
+                        </div>
+
+                        <textarea id="obs" rows="2" class="caixa-texto textarea-obs" placeholder="Descreva observações adicionais..."></textarea>
+                    </div>
+
+                    <div class="campo-grupo">
+                        <label class="rotulo-campo">3. Classificação de Risco (Protocolo de Manchester)</label>
+                        
+                        <div class="grid-manchester">
+                            <button type="button" onclick="selecionarNivel('vermelho', 'Emergência', '0 min')" class="btn-manchester vermelho">
+                                <strong>Vermelho</strong>
+                                <small>0m</small>
+                            </button>
+                            <button type="button" onclick="selecionarNivel('laranja', 'Muito Urgente', '10 min')" class="btn-manchester laranja">
+                                <strong>Laranja</strong>
+                                <small>10m</small>
+                            </button>
+                            <button type="button" onclick="selecionarNivel('amarelo', 'Urgente', '60 min')" class="btn-manchester amarelo">
+                                <strong>Amarelo</strong>
+                                <small>60m</small>
+                            </button>
+                            <button type="button" onclick="selecionarNivel('verde', 'Pouco Urgente', '120 min')" class="btn-manchester verde">
+                                <strong>Verde</strong>
+                                <small>120m</small>
+                            </button>
+                            <button type="button" onclick="selecionarNivel('azul', 'Não Urgente', '240 min')" class="btn-manchester azul">
+                                <strong>Azul</strong>
+                                <small>240m</small>
+                            </button>
+                        </div>
+
+                        <div id="painelConfirmacao" class="painel-confirmacao">
+                            <span id="textoClassificacao">Prioridade selecionada</span>
+                            <span id="tempoAtendimento" class="badge-tempo">-</span>
+                        </div>
+                    </div>
+
+                    <!-- Mensagem de Alerta -->
+                    <div id="alertaForm" class="alerta-form"></div>
+
+                    <!-- Botões de Ação -->
+                    <div class="painel-botoes espaco-entre">
+                        <button type="reset" onclick="resetar()" class="botao botao-secundario">Limpar</button>
+                        <button type="submit" class="botao botao-primario">
+                            <i class="fa-solid fa-check"></i> Finalizar Triagem
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+    let nivelSelecionado = null;
+
+    // busca o paciente 
+    document.addEventListener('DOMContentLoaded', () => {
+        const dadosSessao = sessionStorage.getItem('pacienteAtual');
+        
+        if (dadosSessao) {
+            const paciente = JSON.parse(dadosSessao);
+            
+            // preenche os dados do paciente no card 
+            document.getElementById('paciente-nome').innerText = paciente.nome || 'Paciente sem nome';
+            document.getElementById('paciente-detalhes').innerText = `CPF: ${paciente.cpf || 'Não informado'}`;
+            document.getElementById('paciente-hora').innerText = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            
+            if (paciente.alergias) {
+                document.getElementById('paciente-alergias').innerText = paciente.alergias;
+            }
+        } else {
+            document.getElementById('paciente-nome').innerText = 'Nenhum paciente selecionado';
+            document.getElementById('paciente-detalhes').innerText = 'Volte ao Painel de Chamada para selecionar um paciente.';
+        }
+    });
+
+    // seleção da Classificação do Protocolo de Manchester
+    function selecionarNivel(cor, nivel, tempo) {
+        nivelSelecionado = { cor, nivel, tempo };
+
+        // remove a classe "ativo" de todos os botões
+        document.querySelectorAll('.btn-manchester').forEach(btn => {
+            btn.classList.remove('ativo');
+        });
+
+        // adiciona a classe "ativo" no botão que foi clicado
+        const btnClicado = document.getElementById(`btn-${cor}`);
+        if (btnClicado) {
+            btnClicado.classList.add('ativo');
+        }
+
+        // confirmação estilizado
+        const painel = document.getElementById('painelConfirmacao');
+        if (painel) {
+            painel.className = `painel-confirmacao selecionado-${cor}`;
+            painel.style.display = 'flex';
+
+            document.getElementById('textoClassificacao').innerHTML = `Classificação: <strong>${cor.toUpperCase()}</strong> (${nivel})`;
+            document.getElementById('tempoAtendimento').innerText = `Espera máx: ${tempo}`;
+        }
+    }
+
+    // reseta a seleção do Manchester
+    function resetar() {
+        nivelSelecionado = null;
+
+        // Remove estado ativo de todos os botões
+        document.querySelectorAll('.btn-manchester').forEach(btn => {
+            btn.classList.remove('ativo');
+        });
+
+        // Oculta painel de confirmação e alerta
+        const painel = document.getElementById('painelConfirmacao');
+        if (painel) painel.style.display = 'none';
+
+        const alerta = document.getElementById('alertaForm');
+        if (alerta) alerta.style.display = 'none';
+    }
+
+    // envia do formulário
+    document.getElementById('formTriagem').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const alerta = document.getElementById('alertaForm');
+        alerta.style.display = 'block';
+
+        if (!nivelSelecionado) {
+            alerta.className = 'alerta-form erro';
+            alerta.innerText = "⚠️ Selecione a classificação do Protocolo de Manchester para prosseguir.";
+            return;
+        }
+
+        const queixas = [];
+        document.querySelectorAll('.queixa-check:checked').forEach(item => queixas.push(item.value));
+
+        alerta.className = 'alerta-form sucesso';
+        alerta.innerHTML = `<i class="fa-solid fa-circle-check"></i> Triagem de <strong>${document.getElementById('paciente-nome').innerText}</strong> salva com sucesso como <strong>${nivelSelecionado.cor.toUpperCase()}</strong>!`;
+    });
+</script>
+</body>
+</html>

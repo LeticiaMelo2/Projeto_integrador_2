@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Triagem+ | Painel de Chamada</title>
+
+    <!-- icones -->
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    
+    <!-- Seu CSS oficial -->
+    <link rel="stylesheet" href="../style/style.css">
+    
+    <style>
+        /* Ajustes exclusivos para alinhar o conteúdo do painel abaixo do seu cabeçalho */
+        .painel-wrapper {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 0 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .cards-resumo-painel {
+            display: flex !important;
+            flex-direction: row !important;
+            justify-content: center !important;
+            gap: 20px !important;
+            width: 100% !important;
+            margin-bottom: 25px !important;
+        }
+
+        .card-mini {
+            flex: 1;
+            max-width: 240px;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-left: 5px solid #0284c7;
+            border-radius: 8px;
+            padding: 12px 18px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-mini.verde {
+            border-left-color: #10b981;
+        }
+
+        .card-mini span {
+            font-size: 11px;
+            text-transform: uppercase;
+            color: #64748b;
+            font-weight: 700;
+        }
+
+        .card-mini strong {
+            font-size: 22px;
+            color: #0f172a;
+        }
+
+        .tabela-wrapper-painel {
+            width: 100%;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+        }
+
+        .tabela-wrapper-painel h2 {
+            padding: 16px 20px;
+            font-size: 17px;
+            color: #0f172a;
+            margin: 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .tabela-painel {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .tabela-painel th {
+            background-color: #0d305d;
+            color: #ffffff;
+            padding: 12px 18px;
+            text-align: left;
+        }
+
+        .tabela-painel td {
+            padding: 14px 18px;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .tabela-painel tr:hover {
+            background-color: #f8fafc;
+        }
+
+        .btn-chamar-acao {
+            background-color: #084e71;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn-chamar-acao:hover {
+            background-color: #0369a1;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <header class="cabecalho-principal">
+        <div class="logo-sistema">
+            <i class="bx bx-plus-medical"></i>
+            <span>Triagem<span class="destaque-logo">+</span></span>
+        </div>
+
+        <nav>
+            <ul class="menu-navegacao">
+                <li><a href="cadastro.html"><i class="bx bx-user-plus"></i> Cadastro</a></li>
+                <li><a href="painel_triagem.html" class="item-menu-ativo"><i class="bx bx-spreadsheet"></i> Triagem</a></li>
+                <li><a href="#"><i class="bx bx-first-aid"></i> Atendimento</a></li>
+                <li><a href="#"><i class="bx bx-bar-chart-alt-2"></i> Relatórios</a></li>
+            </ul>
+        </nav>
+
+        <div class="card-usuario-header">
+            <i class="fa-solid fa-user-nurse icone-enfermeira"></i>
+            <div>
+                <p class="nome-enfermeira">Enfª. Maria Silva</p>
+                <p class="coren-enfermeira">COREN-SP: 123456</p>
+            </div>
+
+    </header>
+
+    <main class="painel-wrapper">
+
+
+        <div class="cards-resumo-painel">
+            <div class="card-mini">
+                <span>Aguardando Triagem</span>
+                <strong id="total-aguardando">3</strong>
+            </div>
+            <div class="card-mini verde">
+                <span>Atendidos Hoje</span>
+                <strong id="total-atendidos">18</strong>
+            </div>
+        </div>
+
+        <!-- Tabela ocupando a largura total centralizada -->
+        <div class="tabela-wrapper-painel">
+            <h2>Fila de Espera para Atendimento</h2>
+
+            <table class="tabela-painel">
+    <thead>
+        <tr>
+            <th>Nome do Paciente</th>
+            <th>CPF</th>
+            <th class="coluna-acao-painel">Ação</th>
+        </tr>
+    </thead>
+    <tbody id="lista-pacientes">
+        <tr>
+            <td><strong>Maria da Silva</strong></td>
+            <td>123.456.789-00</td>
+            <td class="coluna-acao-painel">
+                <button type="button" class="btn-chamar-acao" onclick="chamarPaciente('Maria da Silva', '123.456.789-00')">
+                    Chamar Paciente
+                </button>
+            </td>
+        </tr>
+        <tr>
+            <td><strong>João Carlos Santos</strong></td>
+            <td>987.654.321-11</td>
+            <td class="coluna-acao-painel">
+                <button type="button" class="btn-chamar-acao" onclick="chamarPaciente('João Carlos Santos', '987.654.321-11')">
+                    Chamar Paciente
+                </button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+        </div>
+
+    </main>
+
+    <script>
+        function chamarPaciente(nome, cpf) {
+            sessionStorage.setItem('pacienteAtual', JSON.stringify({ nome: nome, cpf: cpf }));
+            window.location.href = 'triagem.html';
+        }
+    </script>
+</body>
+
+</html>

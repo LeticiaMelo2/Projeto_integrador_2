@@ -28,6 +28,8 @@ router.post('/pacientes', async (req, res) => {
 
     if (!paciente) {
         return res.status(404).json({ mensagem: 'Paciente não encontrado.'});
+    } else{
+        return res.status(200).json({ mensagem: 'Paciente encontrado.'});
     }
 
     res.json(paciente);
