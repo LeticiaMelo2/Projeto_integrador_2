@@ -38,7 +38,7 @@ async function enviarDados(dados) {
     //fetch faz requisição ao servidor
     const resposta = await fetch(
       //Rota de leitura do back
-      "http://localhost:3001/cadastrar-paciente",
+      "http://localhost:3001/pacientes",
       {
         method: "POST", //POST => enviar 
         headers: {

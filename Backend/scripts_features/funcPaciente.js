@@ -6,6 +6,9 @@ export async function consultarPaciente(id) {
 
 export async function incluirPaciente(dados) {
     // Implementação para incluir paciente
+    
+
+
 }
 
 export async function alterarPaciente(id, dados) {
