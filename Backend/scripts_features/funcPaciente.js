@@ -5,23 +5,14 @@ import { getConnection } from '../scripts_integracao/conexaoBD.js';
 //funções para o manipulação de pacientes
 
 export async function consultarPaciente(id) {
-    // Implementação para consultar paciente
+    const conexao = await getConnection();
     try {
-        await conexao.beginTransaction();
-        const sqlPacienteAll = `
-            SELECT * FROM PACIENTES where id = ?
-        `;
-
-        const [resultado] = await conexao.execute(sqlPacienteAll, [id]);
-
-        await conexao.commit();
-        return resultado;
-
-    } catch (error) {
-        await conexao.rollback();
-        throw error;
+        const [resultado] = await conexao.execute(
+            'SELECT * FROM PACIENTES WHERE id = ?', [id]
+        );
+        return resultado[0] ?? null;
     } finally {
-        conexao.release();
+        await conexao.end();
     }
 }
 
@@ -60,7 +51,7 @@ export async function incluirPaciente(dados) {
                 contato_emerg_nome,
                 contato_emerg_parentesco,
                 contato_emerg_tel
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         `;
 
         const valoresPaciente = [
@@ -78,6 +69,7 @@ export async function incluirPaciente(dados) {
             dados.endereco_bairro,
             dados.endereco_cidade,
             dados.endereco_estado,
+            dados.endereco_complemento,
             dados.responsavel_legal_nome,
             dados.responsavel_legal_parentesco,
             dados.tipo_sanguineo,
@@ -91,44 +83,71 @@ export async function incluirPaciente(dados) {
         ];
 
         const [resultado] = await conexao.execute(sqlPaciente, valoresPaciente);
-        console.log(resultado);
-
         await conexao.commit();
         return resultado.insertId;
     } catch (error) {
         await conexao.rollback();
         throw error;
     } finally {
-        conexao.release();
+        await conexao.end();
     }
 }
 
 
-export async function alterarPaciente(id, dados, campo) {
+export async function alterarPaciente(id, dados, campo = null) {
     const conexao = await getConnection();
-    // Implementação para alterar paciente
+    const camposPermitidos = new Set([
+        'nome_completo', 'cpf', 'rg', 'data_nascimento', 'sexo', 'nome_mae',
+        'nome_pai', 'telefone', 'endereco_cep', 'endereco_logradouro',
+        'endereco_numero', 'endereco_bairro', 'endereco_cidade',
+        'endereco_estado', 'endereco_complemento', 'responsavel_legal_nome',
+        'responsavel_legal_parentesco', 'tipo_sanguineo', 'alergias',
+        'convenio_nome', 'convenio_numero', 'convenio_plano',
+        'contato_emerg_nome', 'contato_emerg_parentesco', 'contato_emerg_tel'
+    ]);
+
+
     try {
-        await conexao.beginTransaction();
-        const sqlPaciente = `
-            UPDATE PACIENTES
-            SET ${campo} = ?
-            WHERE id = ?
-        `;
-        const valoresPaciente = [
-            dados[campo],
-            id
-        ];
+        // Define os campos que serão atualizados
+        const alteracoes = campo
+            ? { [campo]: dados[campo] }
+            : dados;
 
-        const [resultado] = await conexao.execute(sqlPaciente, valoresPaciente);
-        await conexao.commit();
+        // Apenas campos permitidos
+        const entradas = Object.entries(alteracoes)
+            .filter(([nome]) => camposPermitidos.has(nome));
 
-        return resultado;
+        // Verifica se existem campos inválidos 
+        if (entradas.length === 0 || entradas.length !== Object.keys(alteracoes).length) {
+            throw new Error('Um ou mais campos de paciente são inválidos.');
+        }
 
-    } catch (error) {
-        await conexao.rollback();
-        throw error;
+        // transforma json de dados em parametros funcionais para o update
+        const setClause = entradas
+            .map(([nome]) => `\`${nome}\` = ?`)
+            .join(', ');
+
+        // Extrai os valores e adiciona o ID do paciente
+        const valores = entradas.map(([, valor]) => valor);
+        valores.push(id);
+
+        // Executa a atualização
+        const [resultado] = await conexao.execute(
+            `UPDATE PACIENTES SET ${setClause} WHERE id = ?`,
+            valores
+        );
+
+        // Retorna os dados atualizados
+        const [paciente] = await conexao.execute(
+            'SELECT * FROM PACIENTES WHERE id = ?',
+            [id]
+        );
+
+        return paciente[0] ?? null;
+
+
     } finally {
-        conexao.release();
+        await conexao.end();
     }
 
 
@@ -139,21 +158,10 @@ export async function listarPacientes() {
     // Implementação para listar pacientes
 
     try {
-        await conexao.beginTransaction();
-        const sqlPacienteAll = `
-            SELECT * FROM PACIENTES
-        `;
-
-        const [resultado] = await conexao.execute(sqlPacienteAll);
-
-        await conexao.commit();
+        const [resultado] = await conexao.execute('SELECT * FROM PACIENTES');
         return resultado;
-
-    } catch (error) {
-        await conexao.rollback();
-        throw error;
     } finally {
-        conexao.release();
+        await conexao.end();
     }
 }
 

@@ -1,66 +1,82 @@
-//coleta de dados do formulário
-async function coletarDados(event) {
-    event.preventDefault();
+const API_BASE_URL = window.API_BASE_URL ?? ''; //http://localhost:3000
+// função de encapsulamento de leitura
+function valorCampo(id) {
+    const campo = document.getElementById(id);
+    return campo?.value.trim() || null;
+}
 
-    console.log("Iniciando coleta de dados do formulário...");
-
-    const dadosPaciente = {
-        nome_completo: document.getElementById("nome_completo").value,
-        cpf: document.getElementById("cpf").value,
-        rg: document.getElementById("rg").value,
-        data_nascimento: document.getElementById("data_nascimento").value,
-        sexo: document.getElementById("sexo").value,
-        nome_mae: document.getElementById("nome_mae").value,
-        nome_pai: document.getElementById("nome_pai").value,
-        telefone: document.getElementById("telefone").value,
-        endereco_cep: document.getElementById("endereco_cep").value,
-        endereco_logradouro: document.getElementById("endereco_logradouro").value,
-        endereco_numero: document.getElementById("endereco_numero").value,
-        endereco_complemento: document.getElementById("endereco_complemento").value,
-        endereco_bairro: document.getElementById("endereco_bairro").value,
-        endereco_cidade: document.getElementById("endereco_cidade").value,
-        endereco_estado: document.getElementById("endereco_estado").value,
-        responsavel_legal_nome: document.getElementById("responsavel_legal_nome").value,
-        responsavel_legal_parentesco: document.getElementById("responsavel_legal_parentesco").value,
-        tipo_sanguineo: document.getElementById("tipo_sanguineo").value,
-        alergias: document.getElementById("alergias").value,
-        convenio_nome: document.getElementById("convenio_nome").value,
-        convenio_numero: document.getElementById("convenio_numero").value,
-        convenio_plano: document.getElementById("convenio_plano").value,
-        contato_emerg_nome: document.getElementById("contato_emerg_nome").value,
-        contato_emerg_parentesco: document.getElementById("contato_emerg_parentesco").value,
-        contato_emerg_tel: document.getElementById("contato_emerg_tel").value
+//payload
+function montarDadosPaciente() {
+    return {
+        nome_completo: valorCampo('name'),
+        cpf: valorCampo('cpf'),
+        rg: valorCampo('rg'),
+        data_nascimento: valorCampo('dataNascimento'),
+        sexo: valorCampo('sexo'),
+        nome_mae: valorCampo('nome-mae'),
+        nome_pai: valorCampo('nome-pai'),
+        telefone: valorCampo('telefone'),
+        endereco_cep: valorCampo('CEP'),
+        endereco_logradouro: valorCampo('Logradouro'),
+        endereco_numero: valorCampo('numero'),
+        endereco_complemento: null,
+        endereco_bairro: valorCampo('Bairro'),
+        endereco_cidade: valorCampo('cidade'),
+        endereco_estado: valorCampo('uf'),
+        responsavel_legal_nome: null,
+        responsavel_legal_parentesco: null,
+        tipo_sanguineo: null,
+        alergias: null,
+        convenio_nome: valorCampo('atendimento') === 'convenio' ? valorCampo('plano') : null,
+        convenio_numero: null,
+        convenio_plano: null,
+        contato_emerg_nome: null,
+        contato_emerg_parentesco: null,
+        contato_emerg_tel: null
     };
+}
 
-
+async function requisitarPaciente(url, options = {}) {
+    let resposta;
     try {
-        const resultado = await enviarPaciente(dadosPaciente);
-        alert("Paciente cadastrado com sucesso! ID: " + resultado.id);
-        formularioPaciente.reset();
+        resposta = await fetch(`${API_BASE_URL}${url}`, {
+            ...options,
+            headers: { 'Content-Type': 'application/json', ...options.headers }
+        });
+    } catch {
+        throw new Error('Não foi possível conectar à API de pacientes.');
     }
-    catch (erro) {
-        alert("Erro ao cadastrar paciente: " + erro.message);
-    }   
-};
 
+    const resultado = await resposta.json().catch(() => ({}));
+    if (!resposta.ok) {
+        throw new Error(resultado.mensagem || resultado.erro || 'A API não concluiu a operação.');
+    }
+    return resultado;
+}
 
-
-
-//chamadas a api
 async function enviarPaciente(dadosPaciente) {
-    const resposta = await fetch("http://localhost:3000/pacientes", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
+    return requisitarPaciente('/pacientes', {
+        method: 'POST',
         body: JSON.stringify(dadosPaciente)
     });
+}
 
-    const resultado = await resposta.json();
+async function consultarPaciente(id) {
+    return requisitarPaciente(`/pacientes/${encodeURIComponent(id)}`);
+}
 
-    if (!resposta.ok) {
-        throw new Error(resultado.erro || "Erro ao cadastrar paciente");
-    }
+async function listarPacientes() {
+    return requisitarPaciente('/pacientes');
+}
 
-    return resultado;
+async function alterarPaciente(id, dadosPaciente) {
+    return requisitarPaciente(`/pacientes/${encodeURIComponent(id)}`, {
+        method: 'PATCH',
+        body: JSON.stringify(dadosPaciente)
+    });
+}
+
+async function coletarDados(event) {
+    event?.preventDefault();
+    return enviarPaciente(montarDadosPaciente());
 }

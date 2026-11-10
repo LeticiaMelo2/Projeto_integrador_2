@@ -4,6 +4,7 @@ import router from './rotas.js';
 const app = express();
 
 app.use(express.json());
+app.use(express.static('Frontend'));
 app.use(router);
 
 //tratamento de erros para padrão de todas as rotas

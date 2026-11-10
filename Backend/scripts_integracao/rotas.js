@@ -25,14 +25,7 @@ const router = express.Router();
 //rotas para pacientes
 router.post('/pacientes', async (req, res) => {
     const paciente = await incluirPaciente(req.body);
-
-    if (!paciente) {
-        return res.status(404).json({ mensagem: 'Paciente não encontrado.'});
-    } else{
-        return res.status(200).json({ mensagem: 'Paciente encontrado.'});
-    }
-
-    res.json(paciente);
+    return res.status(201).json({ id: paciente, mensagem: 'Paciente cadastrado com sucesso.' });
 });
 
 router.get('/pacientes/:id', async (req, res) => {
@@ -43,24 +36,29 @@ router.get('/pacientes/:id', async (req, res) => {
         return res.status(404).json({ mensagem: 'Paciente não encontrado.'});
     }
 
-    res.json(paciente);
+    return res.json(paciente);
 });
 
-router.patch('/pacientes/:id/:campo', async (req, res) => {
-    /*Alterar paciente*/
-    const paciente = await alterarPaciente(req.params.id, req.body, req.params.campo);
+router.patch('/pacientes/:id', async (req, res) => {
+    const paciente = await alterarPaciente(req.params.id, req.body);
 
     if (!paciente) {
         return res.status(404).json({ mensagem: 'Paciente não encontrado.'});
     }
 
-    res.json(paciente);
+    return res.json(paciente);
+});
+
+router.patch('/pacientes/:id/:campo', async (req, res) => {
+    const paciente = await alterarPaciente(req.params.id, req.body, req.params.campo);
+    if (!paciente) return res.status(404).json({ mensagem: 'Paciente não encontrado.' });
+    return res.json(paciente);
 });
 
 router.get('/pacientes', async (req, res) => {
     /*Listar pacientes*/
     const pacientes = await listarPacientes();
-    res.json(pacientes);
+    return res.json(pacientes);
 });
 
 //-------------------------------------------------
