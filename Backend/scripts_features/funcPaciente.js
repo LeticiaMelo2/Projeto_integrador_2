@@ -6,6 +6,23 @@ import { getConnection } from '../scripts_integracao/conexaoBD.js';
 
 export async function consultarPaciente(id) {
     // Implementação para consultar paciente
+    try {
+        await conexao.beginTransaction();
+        const sqlPacienteAll = `
+            SELECT * FROM PACIENTES where id = ?
+        `;
+
+        const [resultado] = await conexao.execute(sqlPacienteAll, [id]);
+
+        await conexao.commit();
+        return resultado;
+
+    } catch (error) {
+        await conexao.rollback();
+        throw error;
+    } finally {
+        conexao.release();
+    }
 }
 
 export async function incluirPaciente(dados) {
@@ -105,7 +122,7 @@ export async function alterarPaciente(id, dados, campo) {
         const [resultado] = await conexao.execute(sqlPaciente, valoresPaciente);
         await conexao.commit();
 
-        return resultado;   
+        return resultado;
 
     } catch (error) {
         await conexao.rollback();
@@ -118,8 +135,29 @@ export async function alterarPaciente(id, dados, campo) {
 }
 
 export async function listarPacientes() {
+    const conexao = await getConnection();
     // Implementação para listar pacientes
+
+    try {
+        await conexao.beginTransaction();
+        const sqlPacienteAll = `
+            SELECT * FROM PACIENTES
+        `;
+
+        const [resultado] = await conexao.execute(sqlPacienteAll);
+
+        await conexao.commit();
+        return resultado;
+
+    } catch (error) {
+        await conexao.rollback();
+        throw error;
+    } finally {
+        conexao.release();
+    }
 }
+
+
 
 
 function mascaraDataNasc(params) {
