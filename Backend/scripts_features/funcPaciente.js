@@ -87,8 +87,34 @@ export async function incluirPaciente(dados) {
 }
 
 
-export async function alterarPaciente(id, dados) {
+export async function alterarPaciente(id, dados, campo) {
+    const conexao = await getConnection();
     // Implementação para alterar paciente
+    try {
+        await conexao.beginTransaction();
+        const sqlPaciente = `
+            UPDATE PACIENTES
+            SET ${campo} = ?
+            WHERE id = ?
+        `;
+        const valoresPaciente = [
+            dados[campo],
+            id
+        ];
+
+        const [resultado] = await conexao.execute(sqlPaciente, valoresPaciente);
+        await conexao.commit();
+
+        return resultado;   
+
+    } catch (error) {
+        await conexao.rollback();
+        throw error;
+    } finally {
+        conexao.release();
+    }
+
+
 }
 
 export async function listarPacientes() {

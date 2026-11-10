@@ -46,9 +46,9 @@ router.get('/pacientes/:id', async (req, res) => {
     res.json(paciente);
 });
 
-router.patch('/pacientes/:id', async (req, res) => {
+router.patch('/pacientes/:id/:campo', async (req, res) => {
     /*Alterar paciente*/
-    const paciente = await alterarPaciente(req.params.id, req.body);
+    const paciente = await alterarPaciente(req.params.id, req.body, req.params.campo);
 
     if (!paciente) {
         return res.status(404).json({ mensagem: 'Paciente não encontrado.'});
