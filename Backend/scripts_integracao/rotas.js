@@ -12,15 +12,8 @@ import {
     listarAtendimentos,
     consultarHistoricoAtendimento
 } from '../scripts_features/funcAtendimento.js';
-import {
-    incluirProntuario,
-    consultarProntuario,
-    alterarProntuario,
-    listarProntuarios,
-    consultarHistoricoProntuario
-} from '../scripts_features/funcProntuario.js';
-const router = express.Router();
 
+const router = express.Router();
 
 //rotas para pacientes
 router.post('/pacientes', async (req, res) => {
@@ -108,33 +101,6 @@ router.post('/atendimentos/:id/prontuarios', async (req, res) => {
     /*Criar prontuário*/
     const prontuario = await incluirProntuario(req.params.id, req.body);
     res.json(prontuario);
-});
-
-//-------------------------------------------------
-
-//rotas para prontuários
-router.get('/prontuarios/:id', async (req, res) => {
-    /*Consultar prontuário*/
-    const prontuario = await consultarProntuario(req.params.id);
-    res.json(prontuario);
-});
-
-router.patch('/prontuarios/:id', async (req, res) => {
-    /*Alterar prontuário*/
-    const prontuario = await alterarProntuario(req.params.id, req.body);
-    res.json(prontuario);
-});
-
-router.get('/prontuarios', async (req, res) => {
-    /*Listar prontuários*/
-    const prontuarios = await listarProntuarios();
-    res.json(prontuarios);
-});
-
-router.get('/prontuarios/:id/historico', async (req, res) => {
-    /*Histórico do prontuário*/
-    const historico = await consultarHistoricoProntuario(req.params.id);
-    res.json(historico);
 });
 
 router.get('/teste', (req, res) => {

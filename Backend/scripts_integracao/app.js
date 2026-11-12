@@ -7,12 +7,23 @@ app.use(express.json());
 app.use(express.static('Frontend'));
 app.use(router);
 
-//tratamento de erros para padrão de todas as rotas
+app.use((req, res) => {
+    res.status(404).json({
+        erro: {
+            codigo: 'ROTA_NAO_ENCONTRADA',
+            mensagem: 'Rota não encontrada.'
+        }
+    });
+});
+
 app.use((erro, req, res, next) => {
     console.error('Falha na operação:', erro.message);
 
     res.status(500).json({
-        mensagem: 'Não foi possível concluir a operação.'
+        erro: {
+            codigo: 'ERRO_INTERNO',
+            mensagem: 'Não foi possível concluir a operação.'
+        }
     });
 });
 
