@@ -8,7 +8,7 @@ export async function consultarPaciente(id) {
     const conexao = await getConnection();
     try {
         const [resultado] = await conexao.execute(
-            'SELECT * FROM PACIENTES WHERE id = ?', [id]
+            'SELECT * FROM PACIENTES WHERE id_paciente = ?', [id]
         );
         return resultado[0] ?? null;
     } finally {
@@ -40,8 +40,8 @@ export async function incluirPaciente(dados) {
                 endereco_estado,
                 endereco_complemento,
                 
-                responsavel_legal_nome,
-                responsavel_legal_parentesco,
+                responsavel_nome,
+                responsavel_parentesco,
 
                 tipo_sanguineo,
                 alergias,
@@ -70,8 +70,8 @@ export async function incluirPaciente(dados) {
             dados.endereco_cidade,
             dados.endereco_estado,
             dados.endereco_complemento,
-            dados.responsavel_legal_nome,
-            dados.responsavel_legal_parentesco,
+            dados.responsavel_nome,
+            dados.responsavel_parentesco,
             dados.tipo_sanguineo,
             dados.alergias,
             dados.convenio_nome,
@@ -100,8 +100,8 @@ export async function alterarPaciente(id, dados, campo = null) {
         'nome_completo', 'cpf', 'rg', 'data_nascimento', 'sexo', 'nome_mae',
         'nome_pai', 'telefone', 'endereco_cep', 'endereco_logradouro',
         'endereco_numero', 'endereco_bairro', 'endereco_cidade',
-        'endereco_estado', 'endereco_complemento', 'responsavel_legal_nome',
-        'responsavel_legal_parentesco', 'tipo_sanguineo', 'alergias',
+        'endereco_estado', 'endereco_complemento', 'responsavel_nome',
+        'responsavel_parentesco', 'tipo_sanguineo', 'alergias',
         'convenio_nome', 'convenio_numero', 'convenio_plano',
         'contato_emerg_nome', 'contato_emerg_parentesco', 'contato_emerg_tel'
     ]);
@@ -133,13 +133,13 @@ export async function alterarPaciente(id, dados, campo = null) {
 
         // Executa a atualização
         const [resultado] = await conexao.execute(
-            `UPDATE PACIENTES SET ${setClause} WHERE id = ?`,
+            `UPDATE PACIENTES SET ${setClause} WHERE id_paciente = ?`,
             valores
         );
 
         // Retorna os dados atualizados
         const [paciente] = await conexao.execute(
-            'SELECT * FROM PACIENTES WHERE id = ?',
+            'SELECT * FROM PACIENTES WHERE id_paciente = ?',
             [id]
         );
 
