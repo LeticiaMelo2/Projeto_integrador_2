@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atendimento</title>
+    
+    <!-- Ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="../style/style.css">
+</head>
+<body>
+
+    <header class="cabecalho-principal">
+        <div class="logo-sistema">
+            <i class="bx bx-plus-medical"></i>
+            <span>Triagem<span class="destaque-logo">+</span></span>
+        </div>
+
+        <nav>
+            <ul class="menu-navegacao">
+                <li><a href="cadastro.html"><i class="bx bx-user-plus"></i> Cadastro</a></li>
+                <li><a href="painel_triagem.html"><i class="bx bx-spreadsheet"></i> Painel</a></li>
+                <li><a href="triagem.html"><i class="bx bx-first-aid"></i> Triagem</a></li>
+                <li><a href="atendimento.html" class="item-menu-ativo"><i class="bx bx-user-voice"></i> Atendimento</a></li>
+                <li><a href="relatorios.html"><i class="bx bx-bar-chart-alt-2"></i> Relatórios</a></li>
+            </ul>
+        </nav>
+
+        <!-- Identificação do Profissional Logado -->
+        <div class="card-usuario-header">
+            <i class="fa-solid fa-user-doctor icone-enfermeira"></i>
+            <div>
+                <p class="nome-enfermeira" id="medicoNome">Dr. Roberto Mendes</p>
+                <p class="coren-enfermeira" id="medicoCrm">CRM-SP: 987654</p>
+            </div>
+        </div>
+    </header>
+
+    <main class="conteudo-principal">
+
+        <section class="cartao">
+            <div class="cabecalho-cartao">
+                <div>
+                    <h2 class="titulo-cartao">
+                        <i class="fa-solid fa-list-ol icone-primario"></i> Painel de Espera
+                    </h2>
+                </div>
+            </div>
+
+            <!-- Fila de Espera -->
+            <div class="container-tabela">
+                <table class="tabela-dados">
+                    <thead>
+                        <tr>
+                            <th>Nº Atendimento</th>
+                            <th>Paciente</th>
+                            <th>Classificação Manchester</th>
+                            <th>Chegada</th>
+                            <th class="texto-centralizado">Ação</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabelaFila">
+                        <tr>
+                            <td colspan="5" class="texto-centralizado texto-suave py-4">Carregando fila de atendimento do banco de dados...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+
+        <section id="secaoAtendimento" class="cartao oculto">
+            
+            <!-- Resumo do Paciente-->
+            <div class="resumo-paciente">
+                <div class="cabecalho-resumo-paciente">
+                    <div>
+                        <span class="tag-paciente" id="pNumAtendimento">#0000</span>
+                        <h3 class="nome-paciente" id="pNome">Selecione um Paciente</h3>
+                        <p class="info-paciente">
+                            <span id="pIdade">--</span> | Alergias: 
+                            <strong class="texto-perigo" id="pAlergia">--</strong>
+                        </p>
+                    </div>
+                    <span class="status-em-consulta">
+                        <i class="fa-solid fa-stethoscope"></i> Paciente em Consulta
+                    </span>
+                </div>
+                
+                <!-- Dados da triagem-->
+                <div class="detalhes-triagem">
+                    <div><strong>Sinais Vitais (Triagem):</strong> <span id="pSinais">--</span></div>
+                    <div><strong>Queixas Principais:</strong> <span id="pQueixas">--</span></div>
+                </div>
+            </div>
+
+            <!-- Formulário Médico -->
+            <form id="formAtendimentoMedico" class="formulario-atendimento">
+                <!-- ID oculta para referência de atualização no PostgreSQL -->
+                <input type="hidden" id="atendimentoId" value="">
+                
+                <!-- Diagnóstico -->
+                <div class="grupo-campo">
+                    <label class="rotulo-campo" for="diagnostico">1. Diagnóstico e Observações Médicas</label>
+                    <textarea id="diagnostico" rows="3" required placeholder="Descreva a avaliação clínica, hipótese diagnóstica ou achados..." class="campo-texto"></textarea>
+                </div>
+
+                <!-- Prescrição de Medicamentos -->
+                <div class="grupo-campo">
+                    <div class="acao-cabecalho-campo">
+                        <label class="rotulo-campo">2. Prescrição de Medicamentos / Receita</label>
+                        <button type="button" onclick="adicionarRemedio()" class="botao-link">
+                            <i class="fa-solid fa-plus-circle"></i> Adicionar Medicamento
+                        </button>
+                    </div>
+
+                    <!-- Lista de Remédios -->
+                    <div id="listaMedicamentos" class="lista-medicamentos">
+                        <div class="linha-medicamento">
+                            <input type="text" placeholder="Nome do Medicamento e Dosagem (ex: Paracetamol 500mg)" required class="campo-texto item-remedio">
+                            <input type="text" placeholder="Instruções de Uso (ex: 1 comprimido de 8/8h por 5 dias)" required class="campo-texto item-posologia">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mensagem de Confirmação -->
+                <div id="alertaMedico" class="alerta alerta-sucesso oculto"></div>
+
+                <!-- Botão de Confirmação e Finalização -->
+                <div class="rodape-formulario">
+                    <button type="submit" class="botao botao-sucesso">
+                        <i class="fa-solid fa-circle-check"></i> Confirmar Atendimento e Finalizar
+                    </button>
+                </div>
+            </form>
+        </section>
+
+    </main>
+
+    <script>
+        let filaAtendimentoCache = [];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            carregarFilaAtendimento();
+        });
+
+        // Busca a fila salva no PostgreSQL via backend Node.js
+        async function carregarFilaAtendimento() {
+            const tbody = document.getElementById('tabelaFila');
+            
+            try {
+                const response = await fetch('/api/atendimentos/fila');
+                
+                if (!response.ok) {
+                    throw new Error(`Erro na requisição: ${response.status}`);
+                }
+
+                const fila = await response.json();
+                filaAtendimentoCache = fila;
+
+                if (!fila || fila.length === 0) {
+                    tbody.innerHTML = `
+                        <tr>
+                            <td colspan="5" class="texto-centralizado texto-suave py-4">Nenhum paciente aguardando atendimento médico no momento.</td>
+                        </tr>`;
+                    return;
+                }
+
+                tbody.innerHTML = fila.map(item => {
+                    const estiloBadge = getEstiloManchester(item.classificacao_manchester);
+                    const horarioChegada = item.hora_chegada ? item.hora_chegada.substring(0, 5) : '--:--';
+                    
+                    return `
+                        <tr>
+                            <td class="texto-negrito texto-escuro">#${item.numero_atendimento || item.id}</td>
+                            <td class="texto-seminegrito">${item.nome_paciente}</td>
+                            <td>
+                                <span class="badge ${estiloBadge.classeBadge}">
+                                    <span class="ponto-badge"></span> ${item.classificacao_manchester}
+                                </span>
+                            </td>
+                            <td class="texto-suave">${horarioChegada}</td>
+                            <td class="texto-centralizado">
+                                <button onclick="selecionarPacienteParaConsulta(${item.id})" class="botao ${estiloBadge.classeBotao} botao-pequeno">
+                                    <i class="fa-solid fa-bullhorn"></i> Chamar Paciente
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+                }).join('');
+
+            } catch (error) {
+                console.error("Erro ao carregar fila do banco de dados:", error);
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="5" class="texto-centralizado texto-perigo py-4">
+                            <i class="fa-solid fa-circle-exclamation"></i> Falha ao conectar com o servidor para buscar a fila.
+                        </td>
+                    </tr>`;
+            }
+        }
+
+        function getEstiloManchester(classificacao) {
+            const lower = (classificacao || '').toLowerCase();
+            if (lower.includes('vermelho') || lower.includes('emergência')) {
+                return { classeBadge: 'badge-vermelho', classeBotao: 'botao-primario' };
+            } else if (lower.includes('amarelo') || lower.includes('urgente')) {
+                return { classeBadge: 'badge-amarelo', classeBotao: 'botao-secundario' };
+            } else if (lower.includes('verde') || lower.includes('pouco')) {
+                return { classeBadge: 'badge-verde', classeBotao: 'botao-secundario' };
+            }
+            return { classeBadge: 'badge-secundario', classeBotao: 'botao-secundario' };
+        }
+
+        function selecionarPacienteParaConsulta(idAtendimento) {
+            const paciente = filaAtendimentoCache.find(p => p.id === idAtendimento);
+            if (!paciente) return;
+
+            const secao = document.getElementById('secaoAtendimento');
+            secao.classList.remove('oculto');
+
+            document.getElementById('atendimentoId').value = paciente.id;
+            document.getElementById('pNome').innerText = paciente.nome_paciente;
+            document.getElementById('pNumAtendimento').innerText = `#${paciente.numero_atendimento || paciente.id}`;
+            document.getElementById('pIdade').innerText = paciente.idade ? `${paciente.idade} anos` : '--';
+            document.getElementById('pAlergia').innerText = paciente.alergias || 'Nenhuma informada';
+            document.getElementById('pSinais').innerText = paciente.sinais_vitais || 'Não registrados';
+            document.getElementById('pQueixas').innerText = paciente.queixa_principal || 'Não informada';
+
+            secao.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function adicionarRemedio() {
+            const container = document.getElementById('listaMedicamentos');
+            
+            const novaLinha = document.createElement('div');
+            novaLinha.className = 'linha-medicamento';
+            novaLinha.innerHTML = `
+                <input type="text" placeholder="Nome do Medicamento e Dosagem" required class="campo-texto item-remedio">
+                <input type="text" placeholder="Instruções de Uso" required class="campo-texto item-posologia">
+                <button type="button" onclick="this.parentElement.remove()" class="botao-icone-perigo" title="Remover Medicamento">
+                    <i class="fa-solid fa-trash-can"></i>
+                </button>
+            `;
+            
+            container.appendChild(novaLinha);
+        }
+
+        document.getElementById('formAtendimentoMedico').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const atendimentoId = document.getElementById('atendimentoId').value;
+            const alerta = document.getElementById('alertaMedico');
+            const nomePaciente = document.getElementById('pNome').innerText;
+
+            const remedios = document.querySelectorAll('.item-remedio');
+            const posologias = document.querySelectorAll('.item-posologia');
+            const listaPrescricao = [];
+
+            for (let i = 0; i < remedios.length; i++) {
+                if (remedios[i].value.trim() !== "") {
+                    listaPrescricao.push({
+                        medicamento: remedios[i].value.trim(),
+                        posologia: posologias[i].value.trim()
+                    });
+                }
+            }
+
+            const dadosAtendimento = {
+                atendimento_id: atendimentoId,
+                diagnostico: document.getElementById('diagnostico').value.trim(),
+                prescricao: listaPrescricao
+            };
+
+            try {
+                const response = await fetch(`/api/atendimentos/${atendimentoId}/finalizar`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(dadosAtendimento)
+                });
+
+                if (!response.ok) {
+                    throw new Error('Falha ao salvar atendimento no banco.');
+                }
+
+                alerta.classList.remove('oculto');
+                alerta.innerHTML = `<i class="fa-solid fa-check-double"></i> Atendimento do paciente <strong>${nomePaciente}</strong> finalizado e registrado no sistema!`;
+
+                setTimeout(() => {
+                    document.getElementById('secaoAtendimento').classList.add('oculto');
+                    carregarFilaAtendimento();
+                }, 2500);
+
+            } catch (error) {
+                console.error("Erro ao salvar no BD:", error);
+                alerta.classList.remove('oculto');
+                alerta.className = "alerta alerta-perigo";
+                alerta.innerHTML = `<i class="fa-solid fa-circle-exclamation"></i> Erro ao salvar o atendimento no banco de dados. Tente novamente.`;
+            }
+        });
+    </script>
+</body>
+</html>

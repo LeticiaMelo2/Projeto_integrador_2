@@ -1093,3 +1093,398 @@ body {
 
 .alerta-form.erro { background-color: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; }
 .alerta-form.sucesso { background-color: #d1fae5; color: #065f46; border: 1px solid #6ee7b7; }
+
+
+/* atendimento*/
+
+/* ==========================================================================
+   CONFIGURAÇÕES GERAIS E VARIÁVEIS DO SISTEMA TRIAGEM+
+   ========================================================================== */
+:root {
+    --cor-primaria: #123b63;
+    --cor-primaria-clara: #1e548f;
+    --cor-destaque-verde: #2dd4bf;
+    --cor-texto-principal: #1e293b;
+    --cor-texto-suave: #64748b;
+    --cor-texto-mutado: #94a3b8;
+    --cor-fundo-tela: #f1f5f9;
+    --cor-fundo-cartao: #ffffff;
+    --cor-borda: #e2e8f0;
+
+    /* Protocolo de Manchester */
+    --manchester-vermelho: #ef4444;
+    --manchester-laranja: #f97316;
+    --manchester-amarelo: #eab308;
+    --manchester-amarelo-texto: #713f12;
+    --manchester-verde: #16a34a;
+
+    /* Status e Alertas */
+    --sucesso-fundo: #dcfce7;
+    --sucesso-borda: #86efac;
+    --sucesso-texto: #166534;
+    --sucesso-botao: #059669;
+    --sucesso-botao-hover: #047857;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--cor-fundo-tela);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    color: var(--cor-texto-principal);
+    min-height: 100vh;
+}
+
+/* Utilitários de Exibição e Texto */
+.oculto {
+    display: none !important;
+}
+
+.texto-centralizado { text-align: center; }
+.texto-negrito { font-weight: 700; }
+.texto-seminegrito { font-weight: 600; }
+.texto-escuro { color: #0f172a; }
+.texto-suave { color: var(--cor-texto-suave); }
+.texto-perigo { color: var(--manchester-vermelho); }
+.icone-primario { color: var(--cor-primaria); }
+.py-4 { padding-top: 1rem; padding-bottom: 1rem; }
+
+/* ==========================================================================
+   CONTEÚDO E CARTOES
+   ========================================================================== */
+.conteudo-principal {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.cartao {
+    background-color: var(--cor-fundo-cartao);
+    padding: 1.5rem;
+    border-radius: 1rem;
+    border: 1px solid var(--cor-borda);
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+}
+
+.cabecalho-cartao {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.titulo-cartao {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #0f172a;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* ==========================================================================
+   TABELA DE DADOS E FILA DE ESPERA
+   ========================================================================== */
+.container-tabela {
+    overflow-x: auto;
+}
+
+.tabela-dados {
+    width: 100%;
+    text-align: left;
+    font-size: 0.875rem;
+    border-collapse: collapse;
+}
+
+.tabela-dados th {
+    background-color: #f8fafc;
+    color: var(--cor-texto-suave);
+    border-bottom: 1px solid var(--cor-borda);
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    padding: 0.875rem;
+    font-weight: 700;
+}
+
+.tabela-dados td {
+    padding: 0.875rem;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.tabela-dados tbody tr:hover {
+    background-color: #f8fafc;
+}
+
+/* Badges Manchester */
+.badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+}
+
+.ponto-badge {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+}
+
+.badge-vermelho {
+    background-color: var(--manchester-vermelho);
+    color: #ffffff;
+}
+.badge-vermelho .ponto-badge { background-color: #ffffff; }
+
+.badge-amarelo {
+    background-color: var(--manchester-amarelo);
+    color: var(--manchester-amarelo-texto);
+}
+.badge-amarelo .ponto-badge { background-color: var(--manchester-amarelo-texto); }
+
+.badge-verde {
+    background-color: var(--manchester-verde);
+    color: #ffffff;
+}
+.badge-verde .ponto-badge { background-color: #ffffff; }
+
+/* ==========================================================================
+   RESUMO DO PACIENTE (CONSULTÓRIO MÉDICO)
+   ========================================================================== */
+.resumo-paciente {
+    background-color: #eff6ff;
+    border: 1px solid #bfdbfe;
+    padding: 1.25rem;
+    border-radius: 1rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.cabecalho-resumo-paciente {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.tag-paciente {
+    font-size: 0.75rem;
+    font-weight: 700;
+    background-color: var(--cor-primaria);
+    color: #ffffff;
+    padding: 0.25rem 0.625rem;
+    border-radius: 0.375rem;
+}
+
+.nome-paciente {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin-top: 0.5rem;
+}
+
+.info-paciente {
+    font-size: 0.875rem;
+    color: #475569;
+    margin-top: 0.25rem;
+}
+
+.status-em-consulta {
+    background-color: #d1fae5;
+    color: #065f46;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.375rem 0.75rem;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+}
+
+.detalhes-triagem {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+    padding-top: 0.75rem;
+    font-size: 0.75rem;
+    border-top: 1px solid rgba(191, 219, 254, 0.6);
+}
+
+@media (min-width: 768px) {
+    .detalhes-triagem {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+/* ==========================================================================
+   FORMULÁRIOS E CAMPOS
+   ========================================================================== */
+.formulario-atendimento {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.grupo-campo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.acao-cabecalho-campo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.rotulo-campo {
+    font-weight: 700;
+    color: #1e293b;
+    font-size: 0.875rem;
+}
+
+.campo-texto {
+    width: 100%;
+    padding: 0.75rem 0.875rem;
+    border: 1px solid var(--cor-borda);
+    border-radius: 0.75rem;
+    font-size: 0.875rem;
+    font-family: inherit;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.campo-texto:focus {
+    outline: none;
+    border-color: var(--cor-primaria);
+    box-shadow: 0 0 0 3px rgba(18, 59, 99, 0.15);
+}
+
+textarea.campo-texto {
+    resize: vertical;
+}
+
+.lista-medicamentos {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.linha-medicamento {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Botões */
+.botao {
+    font-family: inherit;
+    font-weight: 600;
+    border: none;
+    border-radius: 0.75rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.375rem;
+    transition: background-color 0.2s, opacity 0.2s;
+}
+
+.botao-pequeno {
+    font-size: 0.75rem;
+    padding: 0.5rem 1rem;
+}
+
+.botao-primario {
+    background-color: var(--cor-primaria);
+    color: #ffffff;
+}
+.botao-primario:hover {
+    background-color: var(--cor-primaria-clara);
+}
+
+.botao-secundario {
+    background-color: #e2e8f0;
+    color: #334155;
+}
+.botao-secundario:hover {
+    background-color: var(--cor-primaria);
+    color: #ffffff;
+}
+
+.botao-sucesso {
+    background-color: var(--sucesso-botao);
+    color: #ffffff;
+    padding: 0.875rem 1.5rem;
+    font-size: 0.875rem;
+    font-weight: 700;
+}
+.botao-sucesso:hover {
+    background-color: var(--sucesso-botao-hover);
+}
+
+.botao-link {
+    background: none;
+    border: none;
+    color: var(--cor-primaria);
+    font-weight: 700;
+    font-size: 0.75rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+.botao-link:hover {
+    color: var(--cor-primaria-clara);
+}
+
+.botao-icone-perigo {
+    background: none;
+    border: none;
+    color: var(--manchester-vermelho);
+    padding: 0.75rem;
+    border-radius: 0.75rem;
+    cursor: pointer;
+}
+.botao-icone-perigo:hover {
+    background-color: #fef2f2;
+}
+
+.rodape-formulario {
+    padding-top: 1rem;
+    border-top: 1px solid #f1f5f9;
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* Alertas */
+.alerta {
+    padding: 1rem;
+    border-radius: 0.75rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-align: center;
+}
+
+.alerta-sucesso {
+    background-color: var(--sucesso-fundo);
+    color: var(--sucesso-texto);
+    border: 1px solid var(--sucesso-borda);
+}
+
+.alerta-perigo {
+    background-color: #fef2f2;
+    color: var(--manchester-vermelho);
+    border: 1px solid #fecaca;
+}
