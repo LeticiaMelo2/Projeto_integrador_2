@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Triagem+</title>
+    
+    <!-- Fontes e Ícones -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="../style/style.css">
+</head>
+<body>
+
+    <div class="container">
+        
+        <div class="cartao">
+            
+            <!-- Painel Esquerdo -->
+            <div class="painel-info">
+                <div>
+                    <div class="logo">
+                        <div class="logo-icone">
+                            <i class="fa-solid fa-notes-medical"></i>
+                        </div>
+                        <h1 class="logo-texto">Triagem<span class="mais-verde">+</span></h1>
+                    </div>
+                    
+                    <div>
+                        <h2 class="banner-titulo">Eficiência e Cuidado no Fluxo de Atendimento.</h2>
+                        <p class="banner-subtitulo">Gerencie prioridades, acompanhe chamados e otimize sua rotina médica com a Triagem+.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Painel Direito (Formulário) -->
+            <div class="painel-login">
+                
+                <div class="form-topo">
+                    <span class="tag-acesso">PAINEL DE ACESSO</span>
+                    <h2 class="form-titulo">Acesse o Triagem<span class="mais-azul">+</span></h2>
+                    <p class="form-subtitulo">Insira suas credenciais médicas para entrar no sistema.</p>
+                </div>
+
+                <form id="formLogin" class="form">
+                    
+                    <div class="campo">
+                        <label for="usuario" class="label">Usuário ou E-mail</label>
+                        <div class="input-box">
+                            <div class="input-icone">
+                                <i class="fa-solid fa-user-md"></i>
+                            </div>
+                            <input type="text" id="usuario" name="usuario" placeholder="Seu ID médico ou e-mail" class="input" required>
+                        </div>
+                    </div>
+
+                    <div class="campo">
+                        <label for="senha" class="label">Senha</label>
+                        <div class="input-box">
+                            <div class="input-icone">
+                                <i class="fa-solid fa-lock"></i>
+                            </div>
+                            <input type="password" id="senha" name="senha" placeholder="••••••••" class="input input-senha" required>
+                            <button type="button" id="btnOlho" class="btn-olho">
+                                <i class="fa-solid fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <p id="msgErro" class="msg-erro"></p>
+
+                    <button type="submit" class="btn-entrar">
+                        <i class="fa-solid fa-right-to-bracket"></i>
+                        Entrar no Sistema
+                    </button>
+
+                </form>
+
+                <div class="suporte">
+                    <p>Novo no hospital ou precisa de ajuda para acessar?</p>
+                    <a href="#" class="suporte-link">
+                        Fale com o Suporte Técnico <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="scripts/login.js"></script>
+
+</body>
+</html>

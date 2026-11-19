@@ -1,0 +1,1704 @@
+/* login */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background-color: #ebf5ff; 
+    color: #1e293b;            
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Estrutura Principal */
+.container {
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+}
+
+.cartao {
+    width: 100%;
+    max-width: 1024px;
+    margin: 0 auto; 
+    background-color: #ffffff;
+    border-radius: 1.5rem;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+    display: flex;
+    overflow: hidden;
+    border: 1px solid #f1f5f9;
+}
+
+/* Painel Esquerdo (Informações e Banner) */
+.painel-info {
+    flex: 1 1 50%;
+    padding: 3rem;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    background-color: #123b63; 
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='800' viewBox='0 0 800 800'%3E%3Cg fill='none' stroke='%23194a7a' stroke-width='1'%3E%3Cpath d='M769 229L1037 260.9M927 880L731 737 520 660 309 538 67 195 251 202 337 188 451 102 547 10 919 644 800 800 994 999 1000 882 Z'/%3E%3Cpath d='M104 113L164 77 150 1 110 50 10 200 10 300 100 350 200 300 250 150 200 100'/%3E%3Cpath d='M639 129L1037 260.9 927 880 731 737 520 660 309 538 67 195 251 202 337 188 451 102 547 10 919 644'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 2.5rem;
+}
+
+.logo-icone {
+    padding: 0.875rem;
+    background-color: #ffffff;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo-icone i {
+    font-size: 1.875rem;
+    color: #123b63;
+}
+
+.logo-texto {
+    font-size: 1.875rem;
+    font-weight: 700;
+}
+
+.logo-texto .mais-verde {
+    color: #2dd4bf; 
+    font-weight: 900;
+}
+
+.banner-titulo {
+    font-size: 2.8rem;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+}
+
+.banner-subtitulo {
+    color: #dbeaff;
+    font-size: 1.125rem;
+}
+
+/* Painel Direito (Formulário) */
+.painel-login {
+    flex: 1 1 50%;
+    padding: 3.5rem 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.form-topo {
+    margin-bottom: 2.5rem;
+}
+
+.tag-acesso {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #123b63;
+    letter-spacing: 0.05em;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.form-titulo {
+    font-size: 2.25rem;
+    font-weight: 800;
+    color: #0f172a;
+}
+
+.form-titulo .mais-azul {
+    color: #1e548f;
+}
+
+.form-subtitulo {
+    color: #64748b;
+    margin-top: 0.5rem;
+    font-size: 1.05rem;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.campo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #334155;
+}
+
+.input-box {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-icone {
+    position: absolute;
+    left: 1rem;
+    pointer-events: none;
+    color: #94a3b8;
+}
+
+.input {
+    width: 100%;
+    padding: 0.875rem 1rem 0.875rem 2.75rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.75rem;
+    background-color: #ffffff;
+    color: #0f172a;
+    font-size: 1rem;
+    font-family: inherit;
+    outline: none;
+    transition: all 0.2s;
+}
+
+.input.input-senha {
+    padding-right: 3rem;
+}
+
+.input:focus {
+    border-color: #123b63;
+    box-shadow: 0 0 0 3px rgba(18, 59, 99, 0.2);
+}
+
+.btn-olho {
+    position: absolute;
+    right: 1rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #94a3b8;
+}
+
+.btn-olho:hover {
+    color: #475569;
+}
+
+.msg-erro {
+    color: #ef4444;
+    font-size: 0.875rem;
+    font-weight: 500;
+    min-height: 1.25rem;
+}
+
+.btn-entrar {
+    width: 100%;
+    background-color: #123b63;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 1rem;
+    padding: 1rem;
+    border: none;
+    border-radius: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    transition: background-color 0.2s;
+    margin-top: 0.5rem;
+}
+
+.btn-entrar:hover {
+    background-color: #0c2845;
+}
+
+/* Suporte */
+.suporte {
+    margin-top: 3.5rem;
+    text-align: center;
+    border-top: 1px solid #e2e8f0;
+    padding-top: 1.5rem;
+}
+
+.suporte p {
+    font-size: 0.875rem;
+    color: #64748b;
+}
+
+.suporte-link {
+    margin-top: 0.35rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #1e548f;
+    text-decoration: none;
+}
+
+.suporte-link:hover {
+    color: #123b63;
+}
+
+/* cadastro */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    background-color: #ebf5ff;
+    color: #1e293b;
+    min-height: 100vh;
+}
+
+/* Correção definitiva para o cabeçalho principal */
+.cabecalho-principal {
+    background-color: #123b63 !important;
+    color: #ffffff !important;
+    padding: 14px 40px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 100 !important;
+}
+
+.cabecalho-principal nav {
+    display: flex !important;
+    align-items: center !important;
+}
+
+.menu-navegacao {
+    display: flex !important;
+    list-style: none !important;
+    gap: 12px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    align-items: center !important;
+}
+
+.logo-sistema {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.logo-sistema i {
+    font-size: 24px;
+    background-color: #ffffff;
+    color: #123b63;
+    padding: 8px;
+    border-radius: 10px;
+}
+
+.destaque-logo {
+    color: #2dd4bf;
+    font-weight: 900;
+}
+
+.menu-navegacao {
+    display: flex;
+    list-style: none;
+    gap: 12px;
+}
+
+.menu-navegacao a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #93c5fd;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 14px;
+    padding: 10px 18px;
+    border-radius: 10px;
+    transition: all 0.2s ease;
+}
+
+.menu-navegacao a i {
+    font-size: 18px;
+}
+
+.menu-navegacao a:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+}
+
+.menu-navegacao a.item-menu-ativo {
+    background-color: #ffffff;
+    color: #123b63;
+    font-weight: 700;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.indicador-seguranca {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: #93c5fd;
+    opacity: 0.9;
+}
+
+.area-conteudo {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 36px 20px;
+}
+
+.cabecalho-pagina {
+    margin-bottom: 28px;
+}
+
+.cabecalho-pagina h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.subtitulo-pagina {
+    font-size: 15px;
+    color: #64748b;
+    margin-top: 4px;
+}
+
+
+.cartao-container {
+    background-color: #ffffff;
+    border-radius: 20px;
+    padding: 32px;
+    margin-bottom: 32px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.04), 0 4px 6px -2px rgba(0, 0, 0, 0.02);
+    border: 1px solid #e2e8f0;
+}
+
+.passos-progresso {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 36px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.etapa-passo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    opacity: 0.5;
+    transition: opacity 0.3s ease;
+}
+
+.etapa-passo.etapa-ativa {
+    opacity: 1;
+}
+
+.numero-etapa {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: #e2e8f0;
+    color: #475569;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 15px;
+}
+
+.etapa-passo.etapa-ativa .numero-etapa {
+    background-color: #123b63;
+    color: #ffffff;
+}
+
+.titulo-etapa {
+    font-weight: 600;
+    font-size: 15px;
+    color: #1e293b;
+}
+
+.linha-conector {
+    width: 80px;
+    height: 2px;
+    background-color: #cbd5e1;
+    margin: 0 20px;
+}
+
+.formulario-etapa h2 {
+    font-size: 20px;
+    font-weight: 700;
+    color: #123b63;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.grade-formulario {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.campo-input {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.campo-largura-total { grid-column: span 3; }
+.campo-largura-dupla { grid-column: span 2; }
+
+.campo-input label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #475569;
+}
+
+.campo-obrigatorio {
+    color: #ef4444;
+}
+
+.campo-input input,
+.campo-input select {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    font-size: 14px;
+    color: #0f172a;
+    background-color: #ffffff;
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+.campo-input input:focus,
+.campo-input select:focus {
+    border-color: #123b63;
+    box-shadow: 0 0 0 3px rgba(18, 59, 99, 0.12);
+}
+
+.painel-botoes {
+    display: flex;
+    margin-top: 32px;
+    padding-top: 20px;
+    border-top: 1px solid #f1f5f9;
+}
+
+.alinhar-direita { justify-content: flex-end; }
+.espaco-entre { justify-content: space-between; }
+
+.botao {
+    padding: 12px 24px;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+}
+
+.botao-primario {
+    background-color: #123b63;
+    color: #ffffff;
+}
+
+.botao-primario:hover {
+    background-color: #0c2845;
+}
+
+.botao-secundario {
+    background-color: #e2e8f0;
+    color: #475569;
+}
+
+.botao-secundario:hover {
+    background-color: #cbd5e1;
+}
+
+.botao-sucesso {
+    background-color: #059669;
+    color: #ffffff;
+}
+
+.botao-sucesso:hover {
+    background-color: #047857;
+}
+
+.cabecalho-cartao {
+    margin-bottom: 20px;
+}
+
+.cabecalho-cartao h2 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #0f172a;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.tabela-responsiva {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.tabela-dados {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 14px;
+}
+
+.tabela-dados th {
+    background-color: #f8fafc;
+    color: #64748b;
+    font-weight: 600;
+    padding: 14px 16px;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+.tabela-dados td {
+    padding: 16px;
+    border-bottom: 1px solid #f1f5f9;
+    color: #334155;
+    vertical-align: middle;
+}
+
+.etiqueta {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.etiqueta-informacao {
+    background-color: #e0f2fe;
+    color: #0369a1;
+}
+
+.status-atendimento {
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.status-aguardando {
+    background-color: #fef3c7;
+    color: #b45309;
+}
+
+.botao-icone {
+    background: none;
+    border: none;
+    font-size: 18px;
+    color: #64748b;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.botao-icone:hover {
+    background-color: #f1f5f9;
+    color: #123b63;
+}
+
+@media (max-width: 992px) {
+    .grade-formulario { grid-template-columns: repeat(2, 1fr); }
+    .campo-largura-total, .campo-largura-dupla { grid-column: span 2; }
+    .indicador-seguranca { display: none; }
+}
+
+
+
+/*psinel triagem*/
+/* ============================================================
+   ESTILOS DO PAINEL DE CHAMADA E FILA DE ATENDIMENTO
+   ============================================================ */
+
+/* Topo Escuro de Navegação */
+.header-topo {
+    background-color: #0d2847;
+    color: #ffffff;
+    padding: 12px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.header-nav {
+    display: flex;
+    gap: 6px;
+}
+
+.header-nav a {
+    color: #ffffff;
+    text-decoration: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.header-nav a.ativo {
+    background-color: #0284c7;
+    font-weight: 600;
+}
+
+.header-user {
+    text-align: right;
+    font-size: 12px;
+    line-height: 1.3;
+}
+
+.header-user span {
+    color: #94a3b8;
+}
+
+/* Area Centralizada com Largura Ampliada */
+.conteudo-principal {
+    width: 100%;
+    max-width: 1050px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+/* Cards Compactos do Painel */
+.cards-container {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.card-box {
+    width: 210px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-left: 4px solid #0284c7;
+    border-radius: 6px;
+    padding: 10px 14px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-box.verde {
+    border-left-color: #10b981;
+}
+
+.card-box p {
+    font-size: 11px;
+    text-transform: uppercase;
+    color: #64748b;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    margin: 0;
+}
+
+.card-box h3 {
+    font-size: 20px;
+    color: #0f172a;
+    font-weight: 700;
+    margin: 0;
+}
+
+/* Tabela em Destaque */
+.tabela-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.tabela-titulo {
+    padding: 16px 24px;
+    font-size: 17px;
+    font-weight: 700;
+    color: #0f172a;
+    border-bottom: 1px solid #e2e8f0;
+    background-color: #ffffff;
+}
+
+.tabela-dados {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 15px;
+    text-align: left;
+}
+
+.tabela-dados th {
+    background-color: #012f46;
+    color: #ffffff;
+    padding: 14px 20px;
+    font-weight: 600;
+}
+
+.tabela-dados td {
+    padding: 16px 20px;
+    border-bottom: 1px solid #f1f5f9;
+    color: #334155;
+}
+
+.tabela-dados tr:hover {
+    background-color: #f8fafc;
+}
+
+.tabela-dados tr:last-child td {
+    border-bottom: none;
+}
+
+.btn-chamar-paciente {
+    background-color: #0284c7;
+    color: #ffffff;
+    border: none;
+    padding: 9px 20px;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.2s;
+}
+
+.btn-chamar-paciente:hover {
+    background-color: #0369a1;
+}
+
+.coluna-acao-painel {
+    text-align: right !important;
+    padding-right: 20px !important;
+}
+
+/* Banner de Identificacao na Tela de Triagem */
+.banner-paciente-ativo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f0f9ff;
+    border: 1px solid #bae6fd;
+    border-left: 5px solid #0284c7;
+    padding: 12px 18px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.banner-paciente-ativo .label {
+    font-size: 11px;
+    text-transform: uppercase;
+    color: #0369a1;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    display: block;
+    margin-bottom: 2px;
+}
+
+.banner-paciente-ativo .nome {
+    font-size: 16px;
+    color: #0f172a;
+    font-weight: 700;
+}
+
+.banner-paciente-ativo .tag-fase {
+    background-color: #0284c7;
+    color: #ffffff;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+/* triagem */ 
+
+/* ============================================================
+   ESTILOS DA TELA DE TRIAGEM
+   ============================================================ */
+
+.card-usuario-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+}
+
+.icone-enfermeira {
+    color: #5eead4;
+    font-size: 18px;
+}
+
+.nome-enfermeira {
+    font-weight: 600;
+    line-height: 1;
+    margin: 0;
+}
+
+.coren-enfermeira {
+    font-size: 11px;
+    color: #bfdbfe;
+    margin: 2px 0 0 0;
+}
+
+.grid-triagem {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 24px;
+}
+
+/* =========================================================
+   TELA DE TRIAGEM — CARD DO PACIENTE (ESQUERDA)
+========================================================= */
+.cartao-paciente {
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 24px;
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.06);
+    border: 1px solid #e2e8f0;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.topo-identificacao {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.badge-atendimento {
+    background: #eff6ff;
+    color: #0b5ed7;
+    font-weight: 700;
+    font-size: 0.85rem;
+    padding: 4px 10px;
+    border-radius: 6px;
+    border: 1px solid #bfdbfe;
+}
+
+.status-triagem-pill {
+    background: #fef3c7;
+    color: #b45309;
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 999px;
+}
+
+.bloco-identificacao h3 {
+    font-size: 1.35rem;
+    color: #0f172a;
+    margin: 0 0 4px 0;
+}
+
+.subtexto-paciente {
+    color: #64748b;
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+.box-info-paciente {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 6px 16px;
+}
+
+.linha-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #e2e8f0;
+    font-size: 0.92rem;
+}
+
+.linha-info.sem-borda {
+    border-bottom: none;
+}
+
+.label-info {
+    color: #475569;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+}
+
+.label-info i {
+    color: #0b5ed7;
+    font-size: 1.1rem;
+}
+
+/* Etiquetas de Alergia (Verde quando nenhuma / Vermelha quando houver) */
+.etiqueta-segura {
+    background: #dcfce7;
+    color: #15803d;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+.etiqueta-alergia {
+    background: #fee2e2;
+    color: #b91c1c;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 0.85rem;
+}
+
+.box-alerta-atencao {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    background: #fffbeb;
+    border-left: 4px solid #f59e0b;
+    padding: 14px;
+    border-radius: 8px;
+    color: #92400e;
+    font-size: 0.88rem;
+    line-height: 1.4;
+}
+
+.box-alerta-atencao i {
+    font-size: 1.25rem;
+    color: #d97706;
+    margin-top: 2px;
+}
+
+/* =========================================================
+   FORMULÁRIO E SINAIS VITAIS (DIREITA)
+========================================================= */
+.icone-coracao {
+    color: #ef4444;
+}
+
+.box-sinais-vitais {
+    background-color: #f8fafc;
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    margin-bottom: 18px;
+}
+
+.rotulo-secao {
+    margin-bottom: 12px;
+    display: block;
+    font-size: 15px;
+    color: #123b63;
+    font-weight: 600;
+}
+
+.grid-sinais {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+
+.campo-grupo .rotulo-campo {
+    display: block;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #334155;
+    margin-bottom: 6px;
+}
+
+/* Inputs e Textarea modernos */
+.caixa-texto {
+    width: 100%;
+    padding: 11px 14px;
+    font-size: 14px;
+    color: #0f172a;
+    background-color: #ffffff;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 10px;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    box-sizing: border-box;
+    font-family: inherit;
+}
+
+.caixa-texto::placeholder {
+    color: #94a3b8;
+}
+
+.caixa-texto:focus {
+    border-color: #0b5ed7;
+    box-shadow: 0 0 0 3px rgba(11, 94, 215, 0.12);
+}
+
+.textarea-obs {
+    margin-top: 6px;
+    min-height: 82px;
+    resize: vertical;
+    line-height: 1.5;
+}
+
+/* Queixas e Sintomas */
+.subtexto-queixas {
+    font-size: 13px;
+    color: #64748b;
+    margin-bottom: 10px;
+}
+
+.grid-queixas {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.grid-queixas .check-card {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 14px;
+    background: #ffffff;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 10px;
+    font-size: 13.5px;
+    color: #334155;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.grid-queixas .check-card:hover {
+    border-color: #93c5fd;
+    background-color: #f8fafc;
+}
+
+.grid-queixas .check-card:has(input:checked) {
+    border-color: #0b5ed7;
+    background-color: #eff6ff;
+    color: #0b5ed7;
+    font-weight: 600;
+}
+
+.grid-queixas .check-card input[type="checkbox"] {
+    accent-color: #0b5ed7;
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+/* =========================================================
+   PROTOCOLO DE MANCHESTER E ALERTAS
+========================================================= */
+.grid-manchester {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    margin-top: 8px;
+}
+
+.grid-manchester .btn-manchester {
+    padding: 12px 8px;
+    border-radius: 10px;
+    cursor: pointer;
+    text-align: center;
+    transition: transform 0.15s ease, filter 0.2s ease, box-shadow 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+}
+
+.grid-manchester .btn-manchester:hover {
+    filter: brightness(0.95);
+    transform: translateY(-2px);
+}
+
+.grid-manchester .btn-manchester strong {
+    display: block;
+    font-size: 13px;
+}
+
+.grid-manchester .btn-manchester small {
+    font-size: 11px;
+    font-weight: 500;
+}
+
+/* Cores dos níveis de risco */
+.grid-manchester .btn-manchester.vermelho { border: 2px solid #ef4444; background-color: #fef2f2; }
+.grid-manchester .btn-manchester.vermelho strong { color: #b91c1c; }
+.grid-manchester .btn-manchester.vermelho small { color: #7f1d1d; }
+
+.grid-manchester .btn-manchester.laranja { border: 2px solid #f97316; background-color: #fff7ed; }
+.grid-manchester .btn-manchester.laranja strong { color: #c2410c; }
+.grid-manchester .btn-manchester.laranja small { color: #7c2d12; }
+
+.grid-manchester .btn-manchester.amarelo { border: 2px solid #eab308; background-color: #fefce8; }
+.grid-manchester .btn-manchester.amarelo strong { color: #a16207; }
+.grid-manchester .btn-manchester.amarelo small { color: #713f12; }
+
+.grid-manchester .btn-manchester.verde { border: 2px solid #22c55e; background-color: #f0fdf4; }
+.grid-manchester .btn-manchester.verde strong { color: #15803d; }
+.grid-manchester .btn-manchester.verde small { color: #14532d; }
+
+.grid-manchester .btn-manchester.azul { border: 2px solid #3b82f6; background-color: #eff6ff; }
+.grid-manchester .btn-manchester.azul strong { color: #1d4ed8; }
+.grid-manchester .btn-manchester.azul small { color: #1e3a8a; }
+
+/* Painel de Confirmação do Manchester (oculto até clicar numa cor) */
+#painelConfirmacao,
+.painel-confirmacao {
+    display: none;
+    margin-top: 12px;
+    padding: 12px 16px;
+    border-radius: 10px;
+    font-size: 13.5px;
+    font-weight: 600;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.badge-tempo {
+    padding: 4px 10px;
+    background: #ffffff;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+#painelConfirmacao.selecionado-vermelho { background-color: #fee2e2; color: #991b1b; border: 1px solid #f87171; }
+#painelConfirmacao.selecionado-laranja  { background-color: #ffedd5; color: #9a3412; border: 1px solid #fb923c; }
+#painelConfirmacao.selecionado-amarelo  { background-color: #fef9c3; color: #854d0e; border: 1px solid #facc15; }
+#painelConfirmacao.selecionado-verde    { background-color: #dcfce7; color: #166534; border: 1px solid #4ade80; }
+#painelConfirmacao.selecionado-azul     { background-color: #dbeafe; color: #1e40af; border: 1px solid #60a5fa; }
+
+/* Mensagem de Alerta do Formulário */
+#alertaForm,
+.alerta-form {
+    display: none;
+    margin-top: 12px;
+    padding: 12px;
+    border-radius: 10px;
+    font-size: 13.5px;
+    font-weight: 600;
+    text-align: center;
+}
+
+#alertaForm.erro    { background-color: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; }
+#alertaForm.sucesso { background-color: #d1fae5; color: #065f46; border: 1px solid #6ee7b7; }
+
+/* atendimento*/
+
+/* ==========================================================================
+   CONFIGURAÇÕES GERAIS E VARIÁVEIS DO SISTEMA TRIAGEM+
+   ========================================================================== */
+:root {
+    --cor-primaria: #123b63;
+    --cor-primaria-clara: #1e548f;
+    --cor-destaque-verde: #2dd4bf;
+    --cor-texto-principal: #1e293b;
+    --cor-texto-suave: #64748b;
+    --cor-texto-mutado: #94a3b8;
+    --cor-fundo-tela: #f1f5f9;
+    --cor-fundo-cartao: #ffffff;
+    --cor-borda: #e2e8f0;
+
+    /* Protocolo de Manchester */
+    --manchester-vermelho: #ef4444;
+    --manchester-laranja: #f97316;
+    --manchester-amarelo: #eab308;
+    --manchester-amarelo-texto: #713f12;
+    --manchester-verde: #16a34a;
+
+    /* Status e Alertas */
+    --sucesso-fundo: #dcfce7;
+    --sucesso-borda: #86efac;
+    --sucesso-texto: #166534;
+    --sucesso-botao: #059669;
+    --sucesso-botao-hover: #047857;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--cor-fundo-tela);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    color: var(--cor-texto-principal);
+    min-height: 100vh;
+}
+
+/* Utilitários de Exibição e Texto */
+.oculto {
+    display: none !important;
+}
+
+.texto-centralizado { text-align: center; }
+.texto-negrito { font-weight: 700; }
+.texto-seminegrito { font-weight: 600; }
+.texto-escuro { color: #0f172a; }
+.texto-suave { color: var(--cor-texto-suave); }
+.texto-perigo { color: var(--manchester-vermelho); }
+.icone-primario { color: var(--cor-primaria); }
+.py-4 { padding-top: 1rem; padding-bottom: 1rem; }
+
+/* ==========================================================================
+   CONTEÚDO E CARTOES
+   ========================================================================== */
+.conteudo-principal {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.cartao {
+    background-color: var(--cor-fundo-cartao);
+    padding: 1.5rem;
+    border-radius: 1rem;
+    border: 1px solid var(--cor-borda);
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+}
+
+.cabecalho-cartao {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.titulo-cartao {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #0f172a;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* ==========================================================================
+   TABELA DE DADOS E FILA DE ESPERA
+   ========================================================================== */
+.container-tabela {
+    overflow-x: auto;
+}
+
+.tabela-dados {
+    width: 100%;
+    text-align: left;
+    font-size: 0.875rem;
+    border-collapse: collapse;
+}
+
+.tabela-dados th {
+    background-color: #f8fafc;
+    color: var(--cor-texto-suave);
+    border-bottom: 1px solid var(--cor-borda);
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    padding: 0.875rem;
+    font-weight: 700;
+}
+
+.tabela-dados td {
+    padding: 0.875rem;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.tabela-dados tbody tr:hover {
+    background-color: #f8fafc;
+}
+
+/* Badges Manchester */
+.badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+}
+
+.ponto-badge {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+}
+
+.badge-vermelho {
+    background-color: var(--manchester-vermelho);
+    color: #ffffff;
+}
+.badge-vermelho .ponto-badge { background-color: #ffffff; }
+
+.badge-amarelo {
+    background-color: var(--manchester-amarelo);
+    color: var(--manchester-amarelo-texto);
+}
+.badge-amarelo .ponto-badge { background-color: var(--manchester-amarelo-texto); }
+
+.badge-verde {
+    background-color: var(--manchester-verde);
+    color: #ffffff;
+}
+.badge-verde .ponto-badge { background-color: #ffffff; }
+
+/* ==========================================================================
+   RESUMO DO PACIENTE (CONSULTÓRIO MÉDICO)
+   ========================================================================== */
+.resumo-paciente {
+    background-color: #eff6ff;
+    border: 1px solid #bfdbfe;
+    padding: 1.25rem;
+    border-radius: 1rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.cabecalho-resumo-paciente {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.tag-paciente {
+    font-size: 0.75rem;
+    font-weight: 700;
+    background-color: var(--cor-primaria);
+    color: #ffffff;
+    padding: 0.25rem 0.625rem;
+    border-radius: 0.375rem;
+}
+
+.nome-paciente {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin-top: 0.5rem;
+}
+
+.info-paciente {
+    font-size: 0.875rem;
+    color: #475569;
+    margin-top: 0.25rem;
+}
+
+.status-em-consulta {
+    background-color: #d1fae5;
+    color: #065f46;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.375rem 0.75rem;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+}
+
+.detalhes-triagem {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+    padding-top: 0.75rem;
+    font-size: 0.75rem;
+    border-top: 1px solid rgba(191, 219, 254, 0.6);
+}
+
+@media (min-width: 768px) {
+    .detalhes-triagem {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+/* ==========================================================================
+   FORMULÁRIOS E CAMPOS
+   ========================================================================== */
+.formulario-atendimento {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.grupo-campo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.acao-cabecalho-campo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.rotulo-campo {
+    font-weight: 700;
+    color: #1e293b;
+    font-size: 0.875rem;
+}
+
+.campo-texto {
+    width: 100%;
+    padding: 0.75rem 0.875rem;
+    border: 1px solid var(--cor-borda);
+    border-radius: 0.75rem;
+    font-size: 0.875rem;
+    font-family: inherit;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.campo-texto:focus {
+    outline: none;
+    border-color: var(--cor-primaria);
+    box-shadow: 0 0 0 3px rgba(18, 59, 99, 0.15);
+}
+
+textarea.campo-texto {
+    resize: vertical;
+}
+
+.lista-medicamentos {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.linha-medicamento {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Botões */
+.botao {
+    font-family: inherit;
+    font-weight: 600;
+    border: none;
+    border-radius: 0.75rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.375rem;
+    transition: background-color 0.2s, opacity 0.2s;
+}
+
+.botao-pequeno {
+    font-size: 0.75rem;
+    padding: 0.5rem 1rem;
+}
+
+.botao-primario {
+    background-color: var(--cor-primaria);
+    color: #ffffff;
+}
+.botao-primario:hover {
+    background-color: var(--cor-primaria-clara);
+}
+
+.botao-secundario {
+    background-color: #e2e8f0;
+    color: #334155;
+}
+.botao-secundario:hover {
+    background-color: var(--cor-primaria);
+    color: #ffffff;
+}
+
+.botao-sucesso {
+    background-color: var(--sucesso-botao);
+    color: #ffffff;
+    padding: 0.875rem 1.5rem;
+    font-size: 0.875rem;
+    font-weight: 700;
+}
+.botao-sucesso:hover {
+    background-color: var(--sucesso-botao-hover);
+}
+
+.botao-link {
+    background: none;
+    border: none;
+    color: var(--cor-primaria);
+    font-weight: 700;
+    font-size: 0.75rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+.botao-link:hover {
+    color: var(--cor-primaria-clara);
+}
+
+.botao-icone-perigo {
+    background: none;
+    border: none;
+    color: var(--manchester-vermelho);
+    padding: 0.75rem;
+    border-radius: 0.75rem;
+    cursor: pointer;
+}
+.botao-icone-perigo:hover {
+    background-color: #fef2f2;
+}
+
+.rodape-formulario {
+    padding-top: 1rem;
+    border-top: 1px solid #f1f5f9;
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* Alertas */
+.alerta {
+    padding: 1rem;
+    border-radius: 0.75rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-align: center;
+}
+
+.alerta-sucesso {
+    background-color: var(--sucesso-fundo);
+    color: var(--sucesso-texto);
+    border: 1px solid var(--sucesso-borda);
+}
+
+.alerta-perigo {
+    background-color: #fef2f2;
+    color: var(--manchester-vermelho);
+    border: 1px solid #fecaca;
+}
+
+/* Corrige o layout do cartão para o título ficar EM CIMA da tabela */
+.cartao {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.cabecalho-cartao {
+    width: 100%;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 12px;
+}
+
+.container-tabela {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.tabela-dados {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tabela-dados th,
+.tabela-dados td {
+    padding: 14px 16px;
+    text-align: left;
+    border-bottom: 1px solid #eef2f6;
+    vertical-align: middle;
+}
+
+/* Etiquetas coloridas do Protocolo de Manchester */
+/* Etiquetas coloridas do Protocolo de Manchester (fundo escuro/sólido) */
+.badge-manchester {
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #ffffff; /* Texto branco por dentro */
+}
+
+.badge-vermelho {
+    background-color: #dc2626;
+}
+
+.badge-laranja {
+    background-color: #ea580c;
+}
+
+.badge-amarelo {
+    background-color: #eab308;
+    color: #1f2937; /* Texto escuro no amarelo para não ficar difícil de ler */
+}
+
+.badge-verde {
+    background-color: #16a34a;
+}
+
+.badge-azul {
+    background-color: #2563eb;
+}
+
+/* Botão Chamar proporcional dentro da tabela */
+.botao-chamar-tabela {
+    background-color: #0d3b66;
+    color: #ffffff;
+    border: none;
+    padding: 8px 18px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.botao-chamar-tabela:hover {
+    background-color: #14538e;
+    transform: translateY(-1px);
+}
