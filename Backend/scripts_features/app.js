@@ -402,6 +402,107 @@ app.patch('/api/atendimentos/:numero_atendimento/iniciar-triagem', async (req, r
     }
 });
 
+//=========================
+//        relatórios
+//=========================
+app.get('/api/relatorios', async (req, res) => {
+    const { status, medico, prioridade, data } = req.query;
+    let conexao;
+
+    try {
+        conexao = await conectar();
+
+        const filtros = [];
+        const valores = [];
+
+        if (status) {
+            filtros.push('a.situacao_id = ?');
+            valores.push(status);
+        }
+        if (medico) {
+            filtros.push('a.usuario_medico_id = ?');
+            valores.push(medico);
+        }
+        if (prioridade) {
+            filtros.push('LOWER(t.classificacao_risco) LIKE ?');
+            valores.push(`%${prioridade.toLowerCase()}%`);
+        }
+        if (data) {
+            filtros.push('DATE(a.criado_em) = ?');
+            valores.push(data);
+        }
+
+        const where = filtros.length ? `WHERE ${filtros.join(' AND ')}` : '';
+        const [resumo] = await conexao.query(`
+            SELECT
+                COUNT(DISTINCT p.id) AS quantidade_pacientes,
+                COUNT(DISTINCT a.id) AS quantidade_atendimentos
+            FROM pacientes p
+            LEFT JOIN atendimento a ON a.paciente_id = p.id
+            LEFT JOIN triagens t ON t.id_atendimento = a.id
+            ${where}
+        `, valores);
+
+        const [porSituacao] = await conexao.query(`
+            SELECT s.id, s.nome, COUNT(a.id) AS quantidade
+            FROM situacoes s
+            LEFT JOIN atendimento a ON a.situacao_id = s.id
+            LEFT JOIN triagens t ON t.id_atendimento = a.id
+            ${where}
+            GROUP BY s.id, s.nome
+            ORDER BY s.id
+        `, valores);
+
+        const [porTipo] = await conexao.query(`
+            SELECT ta.id, ta.nome, COUNT(a.id) AS quantidade
+            FROM tipos_atendimento ta
+            LEFT JOIN pacientes p ON p.tipo_atendimento_id = ta.id
+            LEFT JOIN atendimento a ON a.paciente_id = p.id
+            LEFT JOIN triagens t ON t.id_atendimento = a.id
+            ${where}
+            GROUP BY ta.id, ta.nome
+            ORDER BY ta.nome
+        `, valores);
+
+        const [porPrioridade] = await conexao.query(`
+            SELECT COALESCE(t.classificacao_risco, 'Não classificado') AS nome,
+                   COUNT(a.id) AS quantidade
+            FROM atendimento a
+            LEFT JOIN triagens t ON t.id_atendimento = a.id
+            ${where}
+            GROUP BY t.classificacao_risco
+            ORDER BY quantidade DESC
+        `, valores);
+
+        return res.json({
+            resumo: resumo[0],
+            por_situacao: porSituacao,
+            por_tipo_atendimento: porTipo,
+            por_prioridade: porPrioridade
+        });
+    } catch (erro) {
+        console.error('Erro ao carregar relatório:', erro);
+        return res.status(500).json({ erro: 'Erro interno ao carregar relatório.' });
+    } finally {
+        if (conexao) await conexao.end();
+    }
+});
+
+app.get('/api/relatorios/filtros', async (req, res) => {
+    let conexao;
+    try {
+        conexao = await conectar();
+        const [situacoes] = await conexao.query('SELECT id, nome FROM situacoes ORDER BY id');
+        const [medicos] = await conexao.query("SELECT id, nome FROM usuarios WHERE perfil = 'medico' ORDER BY nome");
+        return res.json({ situacoes, medicos });
+    } catch (erro) {
+        console.error('Erro ao carregar filtros do relatório:', erro);
+        return res.status(500).json({ erro: 'Erro interno ao carregar filtros.' });
+    } finally {
+        if (conexao) await conexao.end();
+    }
+});
+
 //========================
 // indicadores de  triagem
 //========================

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatórios</title>
+
+    <!-- Ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="../style/style.css">
+</head>
+
+<body>
+
+    <header class="cabecalho-principal">
+        <div class="logo-sistema">
+            <i class="bx bx-plus-medical"></i>
+            <span>Triagem<span class="destaque-logo">+</span></span>
+        </div>
+
+        <nav>
+            <ul class="menu-navegacao">
+                <li><a href="cadastro.html"><i class="bx bx-user-plus"></i> Cadastro</a></li>
+                <li><a href="painel_triagem.html"><i class="bx bx-spreadsheet"></i> Painel</a></li>
+                <li><a href="triagem.html"><i class="bx bx-first-aid"></i> Triagem</a></li>
+                <li><a href="atendimento.html"><i class="bx bx-user-voice"></i> Atendimento</a>
+                </li>
+                <li><a href="relatorios.html" class="item-menu-ativo "><i class="bx bx-bar-chart-alt-2"></i> Relatórios</a></li>
+            </ul>
+        </nav>
+
+        <!-- Identificação do Profissional Logado -->
+        <div class="card-usuario-header">
+            <i class="fa-solid fa-user-doctor icone-enfermeira"></i>
+            <div>
+                <p class="nome-enfermeira" id="medicoNome">Dr. Roberto Mendes</p>
+                <p class="coren-enfermeira" id="medicoCrm">CRM-SP: 987654</p>
+            </div>
+        </div>
+    </header>
+
+    <main class="painel-wrapper">
+        <div class="cabecalho-relatorios">
+            <div>
+                <h1>Relatórios</h1>
+                <p>Resumo dos pacientes e atendimentos registrados.</p>
+            </div>
+        </div>
+
+        <div class="filtros_painel">
+            <div class="filtros-header">
+                <div>
+                    <h2>Filtros de Atendimento</h2>
+                    <p>Utilize os filtros para atualizar os contadores.</p>
+                </div>
+                <button type="button" id="limparFiltros" class="btn-limpar-filtros">
+                    <i class="bx bx-refresh"></i> Limpar filtros
+                </button>
+            </div>
+            <div class="filtros-grid">
+                <div class="campo-filtro"><label for="filtroStatus">Status</label><select id="filtroStatus"><option value="">Todos os status</option></select></div>
+                <div class="campo-filtro"><label for="filtroMedico">Médico</label><select id="filtroMedico"><option value="">Todos os médicos</option></select></div>
+                <div class="campo-filtro"><label for="filtroPrioridade">Prioridade</label><select id="filtroPrioridade"><option value="">Todas as prioridades</option><option value="vermelho">Vermelho</option><option value="laranja">Laranja</option><option value="amarelo">Amarelo</option><option value="verde">Verde</option><option value="azul">Azul</option></select></div>
+                <div class="campo-filtro"><label for="filtroData">Data do atendimento</label><input type="date" id="filtroData"></div>
+            </div>
+        </div>
+
+        <div class="cards-resumo-painel cards-relatorios">
+            <div class="card-mini"><span>Quantidade de Pacientes</span><strong id="totalPacientes">0</strong></div>
+            <div class="card-mini verde"><span>Quantidade de Atendimentos</span><strong id="totalAtendimentos">0</strong></div>
+        </div>
+
+        <div class="relatorios-grid">
+            <section class="tabela-wrapper-painel"><h2>Atendimentos por status</h2><div id="listaSituacoes" class="lista-contadores"></div></section>
+            <section class="tabela-wrapper-painel"><h2>Atendimentos por tipo</h2><div id="listaTipos" class="lista-contadores"></div></section>
+            <section class="tabela-wrapper-painel"><h2>Atendimentos por prioridade</h2><div id="listaPrioridades" class="lista-contadores"></div></section>
+        </div>
+    </main>
+    <script src="scripts/relatorios.js"></script>
+
+</body>
+
+</html>

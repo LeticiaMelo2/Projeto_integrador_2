@@ -11,8 +11,8 @@ async function conectar() {
     const conexao = await mysql.createConnection({
         host: process.env.DB_HOST || '127.0.0.1',
         user: process.env.DB_USER || 'root',
-        password: process.env.DB_PASSWORD || 'Ll171207',
-        database: process.env.DB_NAME || 'meuprojeto',
+        password: process.env.DB_PASSWORD || '123456',
+        database: process.env.DB_NAME || 'clinica_db',
         port: process.env.DB_PORT || 3306
     });
 

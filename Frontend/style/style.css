@@ -640,7 +640,7 @@ body {
 
 
 
-/*psinel triagem*/
+/*painel triagem*/
 /* ============================================================
    ESTILOS DO PAINEL DE CHAMADA E FILA DE ATENDIMENTO
    ============================================================ */
@@ -846,6 +846,161 @@ body {
     font-size: 12px;
     font-weight: 600;
 }
+
+/* Área de filtros */
+.filtros_painel {
+    width: 100%;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 25px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.filtros-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.filtros-header h2 {
+    font-size: 17px;
+    color: #0f172a;
+    margin: 0 0 5px;
+}
+
+.filtros-header p {
+    font-size: 13px;
+    color: #64748b;
+    margin: 0;
+}
+
+.filtros-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+}
+
+.campo-filtro {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.campo-filtro label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #334155;
+}
+
+.campo-filtro select,
+.campo-filtro input {
+    width: 100%;
+    height: 42px;
+    padding: 0 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    background: #ffffff;
+    color: #334155;
+    font-size: 13px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.campo-filtro select:focus,
+.campo-filtro input:focus {
+    border-color: #0284c7;
+}
+
+.btn-limpar-filtros {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    background: #ffffff;
+    color: #475569;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-limpar-filtros:hover {
+    background: #f1f5f9;
+}
+
+.cabecalho-relatorios {
+    margin-bottom: 20px;
+}
+
+.cabecalho-relatorios h1 {
+    margin: 0 0 6px;
+    color: #0f172a;
+    font-size: 26px;
+}
+
+.cabecalho-relatorios p {
+    margin: 0;
+    color: #64748b;
+}
+
+.cards-relatorios {
+    margin-bottom: 25px;
+}
+
+.relatorios-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.lista-contadores {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.linha-contador {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 11px 12px;
+    border-bottom: 1px solid #e2e8f0;
+    color: #334155;
+}
+
+.linha-contador strong {
+    color: #0284c7;
+    font-size: 18px;
+}
+
+@media (max-width: 850px) {
+    .relatorios-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Responsividade */
+@media (max-width: 850px) {
+    .filtros-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 500px) {
+    .filtros-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .filtros-header {
+        align-items: flex-start;
+        gap: 12px;
+    }
+}
+
 
 /* triagem */ 
 
