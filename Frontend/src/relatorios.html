@@ -21,6 +21,14 @@
             <span>Triagem<span class="destaque-logo">+</span></span>
         </div>
 
+        <input type="checkbox" id="menu-mobile-toggle" class="menu-mobile-toggle">
+        <label for="menu-mobile-toggle" class="botao-menu-mobile" aria-label="Abrir menu de navegação">
+            <i class="bx bx-menu"></i>
+        </label>
+        <label for="menu-mobile-toggle" class="botao-fechar-mobile" aria-label="Fechar menu de navegação">
+            <i class="bx bx-x"></i>
+        </label>
+
         <nav>
             <ul class="menu-navegacao">
                 <li><a href="cadastro.html"><i class="bx bx-user-plus"></i> Cadastro</a></li>
@@ -42,13 +50,13 @@
         </div>
     </header>
 
-    <main class="painel-wrapper">
-        <div class="cabecalho-relatorios">
+    <main class="area-conteudo">
+        <header class="cabecalho-pagina">
             <div>
-                <h1>Relatórios</h1>
-                <p>Resumo dos pacientes e atendimentos registrados.</p>
+                <h1>Cadastro do Paciente</h1>
+                <p class="subtitulo-pagina">Registre ou gerencie prontuários e atendimentos no sistema.</p>
             </div>
-        </div>
+        </header>
 
         <div class="filtros_painel">
             <div class="filtros-header">
@@ -69,8 +77,8 @@
         </div>
 
         <div class="cards-resumo-painel cards-relatorios">
-            <div class="card-mini"><span>Quantidade de Pacientes</span><strong id="totalPacientes">0</strong></div>
-            <div class="card-mini verde"><span>Quantidade de Atendimentos</span><strong id="totalAtendimentos">0</strong></div>
+            <div class="card-mini"><span>Quantidade de Pacientes: </span><strong id="totalPacientes">0</strong></div>
+            <div class="card-mini verde"><span>Quantidade de Atendimentos: </span><strong id="totalAtendimentos">0</strong></div>
         </div>
 
         <div class="relatorios-grid">
