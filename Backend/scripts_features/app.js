@@ -10,6 +10,15 @@ const conectar = require('../scripts_integracao/conexao'); // Puxa a função de
 //Inicialização da aplicação Express
 const app = express();
 
+// Converte os valores enviados pelo formulário para o ENUM usado pelo MySQL.
+function normalizarSexo(valor) {
+    const sexo = String(valor || '').toLowerCase();
+
+    if (sexo === 'm' || sexo === 'masculino') return 'M';
+    if (sexo === 'f' || sexo === 'feminino') return 'F';
+    return 'Outro';
+}
+
 app.use(cors());          // Autoriza as chamadas vindas do navegador (frontend)
 app.use(express.json());  // Permite que o servidor entenda dados enviados em formato JSON
 
@@ -120,7 +129,7 @@ app.post('/api/pacientes/cadastrar', async (req, res) => {
 
         if (results.length > 0) {
             // PACIENTE JÁ EXISTE: Recupera o ID cadastrado
-            const pacienteId = results[0].id;
+            pacienteId = results[0].id;
 
             //atualiza os dados caso tenham mudado (ex: telefone ou endereço)
             const sqlUpdate = `
@@ -135,7 +144,7 @@ app.post('/api/pacientes/cadastrar', async (req, res) => {
             //substituir os '?'
             const valoresUpdate = [
                 nome, nome_mae, nome_pai, 
-                sexo, cep, logradouro, numero, bairro, 
+                normalizarSexo(sexo), cep, logradouro, numero, bairro, 
                 cidade, uf, telefone, email, tipo_atendimento_id, 
                 convenio_id, alergias,  pacienteId
             ];
@@ -155,7 +164,7 @@ app.post('/api/pacientes/cadastrar', async (req, res) => {
 
             const valoresInsert = [
                 nome, cpf, data_nascimento, rg, nome_mae, nome_pai, 
-                sexo, cep, logradouro, numero, bairro, cidade, uf, telefone, email, 
+                normalizarSexo(sexo), cep, logradouro, numero, bairro, cidade, uf, telefone, email, 
                 tipo_atendimento_id, convenio_id, tipo_sanguineo,
                 alergias
             ];
@@ -246,6 +255,80 @@ app.get('/api/pacientes/situacao/1', async (req, res) => {
     }
 });
 
+//======================================
+// buscar todos os pacientes cadastrados
+//======================================
+
+// Retorna todos os pacientes e o atendimento mais recente de cada um.
+app.get('/api/pacientes/cadastrados', async (req, res) => {
+    let conexao;
+
+    try {
+        conexao = await conectar();
+
+        const sql = `
+            SELECT
+                p.id AS paciente_id,
+                p.nome AS paciente_nome,
+                p.cpf,
+                a.id AS numero_atendimento,
+                a.situacao_id,
+                COALESCE(s.nome, 'Sem atendimento') AS situacao_nome
+            FROM pacientes p
+            LEFT JOIN atendimento a ON a.paciente_id = p.id
+                AND a.id = (
+                    SELECT MAX(a2.id)
+                    FROM atendimento a2
+                    WHERE a2.paciente_id = p.id
+                )
+            LEFT JOIN situacoes s ON s.id = a.situacao_id
+            ORDER BY p.nome ASC
+        `;
+
+        const [pacientes] = await conexao.query(sql);
+        return res.json(pacientes);
+    } catch (erro) {
+        console.error('Erro ao buscar pacientes cadastrados:', erro);
+        return res.status(500).json({
+            erro: 'Erro interno ao carregar os pacientes cadastrados.'
+        });
+    } finally {
+        if (conexao) await conexao.end();
+    }
+});
+
+// Fila do painel: mantém os atendimentos ativos e informa a situação atual
+// (situacoes) e a classificação da triagem (triagens), quando já realizada.
+app.get('/api/atendimentos/painel', async (req, res) => {
+    let conexao;
+    try {
+        conexao = await conectar();
+        const [rows] = await conexao.query(`
+            SELECT
+                a.id AS numero_atendimento,
+                p.nome AS paciente_nome,
+                s.id AS situacao_id,
+                s.nome AS situacao_nome,
+                t.classificacao_risco,
+                a.criado_em,
+                a.data_inicio,
+                a.data_fim
+            FROM atendimento a
+            INNER JOIN pacientes p ON p.id = a.paciente_id
+            INNER JOIN situacoes s ON s.id = a.situacao_id
+            LEFT JOIN triagens t ON t.id_atendimento = a.id
+            WHERE a.situacao_id IN (1, 2, 3, 4)
+            ORDER BY a.id ASC
+        `);
+        return res.json(rows);
+    } catch (erro) {
+        console.error('Erro ao carregar painel de atendimentos:', erro);
+        return res.status(500).json({ erro: 'Erro interno ao carregar o painel.' });
+    } finally {
+        if (conexao) await conexao.end();
+    }
+});
+
 //====================
 // icones atendimento
 //====================
@@ -287,7 +370,7 @@ app.get('/api/pacientes/:numero_atendimento', async (req, res) => {
     }
 });
 
-// editar dados 
+// editar dados do paciente pelo número do atendimento
 app.put('/api/pacientes/:numero_atendimento', async (req, res) => {
     //extrai da URL o valor que veio no lugar de :numero_atendimento e guarda na variável de mesmo nome
     const { numero_atendimento } = req.params;
@@ -318,7 +401,7 @@ app.put('/api/pacientes/:numero_atendimento', async (req, res) => {
 
         const valores = [
             nome, cpf, data_nascimento, rg, nome_mae, nome_pai,
-            sexo, cep, logradouro, numero, bairro, cidade, uf,
+            normalizarSexo(sexo), cep, logradouro, numero, bairro, cidade, uf,
             telefone, email, tipo_atendimento_id, convenio_id,
             tipo_sanguineo, alergias, numero_atendimento
         ];
@@ -330,6 +413,53 @@ app.put('/api/pacientes/:numero_atendimento', async (req, res) => {
     } catch (erro) {
         console.error('Erro ao editar paciente:', erro);
         return res.status(500).json({ erro: 'Erro interno ao atualizar paciente.' });
+    } finally {
+        if (conexao) await conexao.end();
+    }
+});
+
+// Edita diretamente o cadastro do paciente, sem criar atendimento ou paciente novo.
+app.put('/api/pacientes/cadastro/:paciente_id', async (req, res) => {
+    const { paciente_id } = req.params;
+    const {
+        nome, cpf, data_nascimento, rg, nome_mae, nome_pai,
+        sexo, cep, logradouro, numero, bairro, cidade, uf,
+        telefone, email, tipo_atendimento_id, convenio_id,
+        tipo_sanguineo, alergias
+    } = req.body;
+
+    let conexao;
+
+    try {
+        conexao = await conectar();
+
+        const sql = `
+            UPDATE pacientes
+            SET nome = ?, cpf = ?, data_nascimento = ?, rg = ?,
+                nome_mae = ?, nome_pai = ?, sexo = ?, cep = ?,
+                logradouro = ?, numero = ?, bairro = ?, cidade = ?,
+                uf = ?, telefone = ?, email = ?, tipo_atendimento_id = ?,
+                convenio_id = ?, tipo_sanguineo = ?, alergias = ?
+            WHERE id = ?
+        `;
+
+        const valores = [
+            nome, cpf, data_nascimento, rg, nome_mae, nome_pai,
+            normalizarSexo(sexo), cep, logradouro, numero, bairro, cidade,
+            uf, telefone, email, tipo_atendimento_id, convenio_id,
+            tipo_sanguineo, alergias, paciente_id
+        ];
+
+        const [resultado] = await conexao.query(sql, valores);
+
+        if (resultado.affectedRows === 0) {
+            return res.status(404).json({ erro: 'Paciente não encontrado.' });
+        }
+
+        return res.json({ mensagem: 'Paciente atualizado com sucesso!' });
+    } catch (erro) {
+        console.error('Erro ao atualizar cadastro do paciente:', erro);
+        return res.status(500).json({ erro: 'Erro interno ao atualizar o paciente.' });
     } finally {
         if (conexao) await conexao.end();
     }
@@ -705,6 +835,80 @@ app.post('/api/atendimentos/:id/finalizar', async (req, res) => {
     } catch (erro) {
         console.error('Erro ao finalizar atendimento:', erro);
         return res.status(500).json({ erro: 'Erro interno ao finalizar atendimento.' });
+    } finally {
+        if (conexao) await conexao.end();
+    }
+});
+
+// Histórico de pacientes. A busca é opcional e aceita CPF completo ou parcial.
+app.get('/api/historico/pacientes', async (req, res) => {
+    let conexao;
+    const cpf = String(req.query.cpf || '').trim();
+    try {
+        conexao = await conectar();
+        const [pacientes] = await conexao.query(`
+            SELECT id, nome, cpf, data_nascimento, telefone, email
+            FROM pacientes
+            WHERE cpf LIKE ?
+            ORDER BY nome ASC
+        `, [`%${cpf}%`]);
+        return res.json(pacientes);
+    } catch (erro) {
+        console.error('Erro ao carregar histórico de pacientes:', erro);
+        return res.status(500).json({ erro: 'Erro interno ao carregar o histórico.' });
+    } finally {
+        if (conexao) await conexao.end();
+    }
+});
+
+app.get('/api/historico/pacientes/:id', async (req, res) => {
+    let conexao;
+    try {
+        conexao = await conectar();
+        const [pacientes] = await conexao.query(`
+            SELECT
+                p.*,
+                ta.nome AS tipo_atendimento_nome,
+                cv.nome AS convenio_nome
+            FROM pacientes p
+            LEFT JOIN tipos_atendimento ta ON ta.id = p.tipo_atendimento_id
+            LEFT JOIN convenios cv ON cv.id = p.convenio_id
+            WHERE p.id = ?
+        `, [req.params.id]);
+        if (!pacientes.length) {
+            return res.status(404).json({ erro: 'Paciente não encontrado.' });
+        }
+
+        const [atendimentos] = await conexao.query(`
+            SELECT
+                a.id AS numero_atendimento,
+                a.criado_em,
+                a.data_inicio,
+                a.data_fim,
+                s.nome AS situacao_nome,
+                t.classificacao_risco,
+                t.principais_queixas,
+                t.pressao_arterial,
+                t.temp_corporal,
+                t.batimentos_cardiacos,
+                t.observacoes AS observacoes_triagem,
+                c.diagnostico,
+                c.prescricao,
+                c.observacoes AS observacoes_consulta,
+                u.nome AS medico_nome
+            FROM atendimento a
+            LEFT JOIN situacoes s ON s.id = a.situacao_id
+            LEFT JOIN triagens t ON t.id_atendimento = a.id
+            LEFT JOIN consultas c ON c.atendimento_id = a.id
+            LEFT JOIN usuarios u ON u.id = a.usuario_medico_id
+            WHERE a.paciente_id = ?
+            ORDER BY a.criado_em DESC, a.id DESC
+        `, [req.params.id]);
+
+        return res.json({ paciente: pacientes[0], atendimentos });
+    } catch (erro) {
+        console.error('Erro ao carregar detalhes históricos:', erro);
+        return res.status(500).json({ erro: 'Erro interno ao carregar os detalhes históricos.' });
     } finally {
         if (conexao) await conexao.end();
     }

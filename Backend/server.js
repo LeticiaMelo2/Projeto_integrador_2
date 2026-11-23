@@ -96,7 +96,8 @@ app.post('/api/pacientes', async (req, res) => {
         telefone,
         email,
         tipoAtendimentoId,
-        convenioId
+        convenioId,
+        alergias
     } = req.body;
 
 //validação de campos obrigatórios

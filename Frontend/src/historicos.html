@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Histórico de Pacientes</title>
+
+    <!-- Bibliotecas utilizadas pelo projeto -->
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../style/style.css">
+</head>
+<body>
+    <header class="cabecalho-principal">
+        <div class="logo-sistema">
+            <i class="bx bx-plus-medical"></i>
+            <span>Triagem<span class="destaque-logo">+</span></span>
+        </div>
+
+        <input type="checkbox" id="menu-mobile-toggle" class="menu-mobile-toggle">
+        <label for="menu-mobile-toggle" class="botao-menu-mobile" aria-label="Abrir menu de navegação">
+            <i class="bx bx-menu"></i>
+        </label>
+        <label for="menu-mobile-toggle" class="botao-fechar-mobile" aria-label="Fechar menu de navegação">
+            <i class="bx bx-x"></i>
+        </label>
+
+        <nav>
+            <ul class="menu-navegacao">
+                <li><a href="cadastro.html"><i class="bx bx-user-plus"></i> Cadastro</a></li>
+                <li><a href="painel_triagem.html"><i class="bx bx-spreadsheet"></i> Painel</a></li>
+                <li><a href="triagem.html"><i class="bx bx-first-aid"></i> Triagem</a></li>
+                <li><a href="atendimento.html"><i class="bx bx-user-voice"></i> Atendimento</a></li>
+                <li><a href="historicos.html" class="item-menu-ativo"><i class="bx bx-history"></i> Históricos</a></li>
+                <li><a href="relatorios.html"><i class="bx bx-bar-chart-alt-2"></i> Relatórios</a></li>
+            </ul>
+        </nav>
+
+        <!-- Identificação do Profissional Logado -->
+        <div class="card-usuario-header">
+            <i class="fa-solid fa-user-doctor icone-enfermeira"></i>
+            <div>
+                <p class="nome-enfermeira" id="medicoNome">Dr. Roberto Mendes</p>
+                <p class="coren-enfermeira" id="medicoCrm">CRM-SP: 987654</p>
+            </div>
+        </div>
+    </header>
+
+    <main class="area-conteudo">
+        <header class="cabecalho-pagina">
+            <div>
+                <h1>Histórico de Pacientes</h1>
+                <p class="subtitulo-pagina">Consulte pacientes cadastrados e todos os seus atendimentos.</p>
+            </div>
+        </header>
+
+        <section class="cartao-container">
+            <div class="historico-busca">
+                <div class="campo-input campo-busca-historico">
+                    <label for="buscaCpf">Buscar por CPF</label>
+                    <input type="text" id="buscaCpf" placeholder="Digite o CPF ou parte dele">
+                </div>
+                <button type="button" id="btnBuscarHistorico" class="botao botao-primario">
+                    <i class="bx bx-search"></i> Buscar
+                </button>
+            </div>
+
+            <div class="tabela-responsiva">
+                <table class="tabela-dados">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>CPF</th>
+                            <th>Idade</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabelaHistoricoPacientes"></tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal inicialmente invisível; os dados são preenchidos antes de exibi-lo. -->
+    <div id="modalHistorico" class="modal-overlay" style="display: none;" aria-hidden="true">
+        <div class="modal-card modal-historico" role="dialog" aria-modal="true" aria-labelledby="tituloHistorico">
+            <div class="modal-cabecalho">
+                <h2 id="tituloHistorico">Detalhes do Paciente</h2>
+                <button type="button" id="fecharHistorico" class="modal-fechar" aria-label="Fechar modal">&times;</button>
+            </div>
+
+            <div class="historico-containers">
+                <section class="historico-detalhes" id="detalhesPaciente">
+                    <h3 class="nome-paciente-historico">Nome do paciente</h3>
+                    <div class="container-detalhes">
+                        <section>
+                            <div class="campo-detalhe-paciente campo-cpf">
+                                <p><b>CPF</b></p>
+                                <p class="cpf-paciente-historico">-</p>
+                            </div>
+                            
+                            <div class="campo-detalhe-paciente campo-rg">
+                                <p><b>RG</b></p>
+                                <p class="rg-paciente-historico">-</p>
+                            </div>
+
+                            <div class="campo-detalhe-paciente campo-data-nascimento">
+                                <p><b>Data de nascimento</b></p>
+                                <p class="data-nascimento-paciente-historico">-</p>
+                            </div>
+
+                            <div class="campo-detalhe-paciente campo-idade">
+                                <p><b>Idade</b></p>
+                                <p class="idade-paciente-historico">-</p>
+                            </div>
+                            <div class="campo-detalhe-paciente campo-nome-mae">
+                                <p><b>Nome da mãe</b></p>
+                                <p class="nome-mae-paciente-historico">-</p>
+                            </div>
+
+                            <div class="campo-detalhe-paciente campo-nome-pai">
+                                <p><b>Nome do pai</b></p>
+                                <p class="nome-pai-paciente-historico">-</p>
+                            </div>
+
+                            <div class="campo-detalhe-paciente campo-sexo">
+                                <p><b>Sexo</b></p>
+                                <p class="sexo-paciente-historico">-</p>
+                            </div>
+                        </section>
+                        
+                        <section>
+
+                            <div class="campo-detalhe-paciente campo-telefone">
+                                <p><b>Telefone</b></p>
+                                <p class="telefone-paciente-historico">-</p>
+                            </div>
+
+                            <div class="campo-detalhe-paciente campo-email">
+                                <p><b>E-mail</b></p>
+                                <p class="email-paciente-historico">-</p>
+                            </div>
+
+                            <div class="campo-detalhe-paciente campo-endereco">
+                                <p><b>Endereço</b></p>
+                                <p class="endereco-paciente-historico">-</p>
+                            </div>
+
+                            <div class="campo-detalhe-paciente campo-cep">
+                                <p><b>CEP</b></p>
+                                <p class="cep-paciente-historico">-</p>
+                            </div>
+
+                            <div class="campo-detalhe-paciente campo-tipo-atendimento">
+                                <p><b>Tipo de atendimento</b></p>
+                                <p class="tipo-atendimento-paciente-historico">-</p>
+                            </div>
+
+                            <div class="campo-detalhe-paciente campo-convenio">
+                                <p><b>Convênio</b></p>
+                                <p class="convenio-paciente-historico">-</p>
+                            </div>
+
+                            <div class="campo-detalhe-paciente campo-tipo-sanguineo">
+                                <p><b>Tipo sanguíneo</b></p>
+                                <p class="tipo-sanguineo-paciente-historico">-</p>
+                            </div>
+
+                            <div class="campo-detalhe-paciente campo-alergias">
+                                <p><b>Alergias</b></p>
+                                <p class="alergias-paciente-historico">Nenhuma</p>
+                            </div>
+
+                            <div class="campo-detalhe-paciente campo-data-cadastro">
+                                <p><b>Data de cadastro</b></p>
+                                <p class="data-cadastro-paciente-historico">-</p>
+                            </div>
+
+                        </section>
+                    </div>
+                </section>
+
+                <section class="secao-detalhes-table">
+                    <h3>Atendimentos relacionados</h3>
+                    <div class="tabela-responsiva">
+                        <table class="tabela-dados">
+                            <thead>
+                                <tr>
+                                    <th class="small">Nº</th>
+                                    <th class="medium">Data</th>
+                                    <th class="small">Situação</th>
+                                    <th class="small">Risco</th>
+                                    <th class="medium">Diagnóstico</th>
+                                    <th class="large">Queixas</th>
+                                    <th class="large">Sinais vitais</th>
+                                    <th class="medium">Médico</th>
+                                    <th class="large">Prescrição</th>
+                                    <th class="large">Observações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabelaAtendimentosPaciente"></tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <script src="scripts/historicos.js"></script>
+</body>
+</html>

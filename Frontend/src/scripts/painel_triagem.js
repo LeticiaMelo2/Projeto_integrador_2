@@ -40,14 +40,14 @@ async function carregarPainelTriagem() {
     try {
         tbody.innerHTML = `
             <tr>
-                <td colspan="3" style="text-align:center;">
+                <td colspan="5" style="text-align:center;">
                     Carregando pacientes...
                 </td>
             </tr>
         `;
 
         const response = await fetch(
-            'http://localhost:3000/api/pacientes/situacao/1'
+            'http://localhost:3000/api/atendimentos/painel'
         );
 
         if (!response.ok) {
@@ -65,7 +65,7 @@ async function carregarPainelTriagem() {
 
         tbody.innerHTML = `
             <tr>
-                <td colspan="3" style="text-align:center; color:red;">
+                <td colspan="5" style="text-align:center; color:red;">
                     Erro ao carregar a fila de pacientes.
                 </td>
             </tr>
@@ -122,7 +122,7 @@ function renderizarPacientes(lista) {
     if (lista.length === 0) {
         tbody.innerHTML = `
             <tr>
-                <td colspan="3"
+                <td colspan="5"
                     style="text-align:center; color:#777;">
                     Nenhum paciente encontrado com os filtros selecionados.
                 </td>
@@ -139,12 +139,20 @@ function renderizarPacientes(lista) {
 
             <td>${paciente.paciente_nome}</td>
 
+            <td>
+                <span class="badge badge-status">
+                    ${paciente.situacao_nome || 'Sem situação'}
+                </span>
+            </td>
+
+            <td>${paciente.classificacao_risco || 'Aguardando triagem'}</td>
+
             <td class="coluna-acao-painel">
-                <button
-                    class="btn-chamar-paciente"
-                    onclick="iniciarAtendimento(${paciente.numero_atendimento})">
-                    Atender
-                </button>
+                ${paciente.situacao_id === 1
+                    ? `<button class="btn-chamar-paciente" onclick="iniciarAtendimento(${paciente.numero_atendimento})">
+                            Atender
+                       </button>`
+                    : '<span class="texto-suave">Em andamento</span>'}
             </td>
         </tr>
     `).join('');

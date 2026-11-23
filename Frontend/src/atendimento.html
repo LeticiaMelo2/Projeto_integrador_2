@@ -33,6 +33,7 @@
                 <li><a href="painel_triagem.html"><i class="bx bx-spreadsheet"></i> Painel</a></li>
                 <li><a href="triagem.html"><i class="bx bx-first-aid"></i> Triagem</a></li>
                 <li><a href="atendimento.html" class="item-menu-ativo"><i class="bx bx-user-voice"></i> Atendimento</a></li>
+                <li><a href="historicos.html"><i class="bx bx-history"></i> Históricos</a></li>
                 <li><a href="relatorios.html"><i class="bx bx-bar-chart-alt-2"></i> Relatórios</a></li>
             </ul>
         </nav>
@@ -89,7 +90,7 @@
                         <span class="tag-paciente" id="pNumAtendimento">#0000</span>
                         <h3 class="nome-paciente" id="pNome">Selecione um Paciente</h3>
                         <p class="info-paciente">
-                            <span id="pIdade">--</span> | Alergias: 
+                            Idade: <span id="pIdade">--</span> | Alergias:
                             <strong class="texto-perigo" id="pAlergia">--</strong>
                         </p>
                     </div>
@@ -106,7 +107,7 @@
             </div>
 
             <!-- Formulário Médico -->
-            <form id="formAtendimentoMedico" class="formulario-atendimento">
+            <form id="formAtendimento" class="formulario-atendimento">
                 <!-- ID oculta para referência de atualização no PostgreSQL -->
                 <input type="hidden" id="atendimentoId" value="">
                 
