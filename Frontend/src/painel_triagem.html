@@ -159,80 +159,6 @@
     <main class="painel-wrapper">
 
 
-
-
-        <div class="cards-resumo-painel">
-            <div class="card-mini">
-                <span>Aguardando Triagem</span>
-                <strong id="contadorAguardando"></strong>
-            </div>
-            <div class="card-mini verde">
-                <span>Atendidos Hoje</span>
-                <strong id="contadorAtendidos"></strong>
-            </div>
-        </div>
-
-
-        <!-- Os filtros de atendimento ficam disponíveis na tela de Relatórios. -->
-        <div class="filtros_painel oculto">
-            <div class="filtros-header">
-                <div>
-                    <h2>Filtros de Atendimento</h2>
-                    <p>Utilize os filtros para localizar os pacientes.</p>
-                </div>
-                <button type="button" id="limparFiltros" class="btn-limpar-filtros">
-                    <i class="bx bx-refresh"></i>
-                    Limpar filtros
-                </button>
-            </div>
-
-            <div class="filtros-grid">
-
-                <!-- Status -->
-                <div class="campo-filtro">
-                    <label for="filtroStatus">Status</label>
-                    <select id="filtroStatus">
-                        <option value="">Todos os status</option>
-                        <option value="aberto">Aberto</option>
-                        <option value="andamento">Em andamento</option>
-                        <option value="finalizado">Finalizado</option>
-                    </select>
-                </div>
-
-                <!-- Médico -->
-                <div class="campo-filtro">
-                    <label for="filtroMedico">Médico</label>
-                    <select id="filtroMedico">
-                        <option value="">Todos os médicos</option>
-                        <option value="medico1">Dr. João Silva</option>
-                        <option value="medico2">Dra. Ana Oliveira</option>
-                        <option value="medico3">Dr. Carlos Santos</option>
-                    </select>
-                </div>
-
-                <!-- Prioridade -->
-                <div class="campo-filtro">
-                    <label for="filtroPrioridade">Prioridade</label>
-                    <select id="filtroPrioridade">
-                        <option value="">Todas as prioridades</option>
-                        <option value="vermelho">🔴 Emergência</option>
-                        <option value="laranja">🟠 Muito Urgente</option>
-                        <option value="amarelo">🟡 Urgente</option>
-                        <option value="verde">🟢 Pouco Urgente</option>
-                        <option value="azul">🔵 Não Urgente</option>
-                    </select>
-                </div>
-
-                <!-- Data -->
-                <div class="campo-filtro">
-                    <label for="filtroData">Data do atendimento</label>
-                    <input type="date" id="filtroData">
-                </div>
-
-            </div>
-        </div>
-
-
         <!-- Tabela ocupando a largura total centralizada -->
         <div class="tabela-wrapper-painel">
             <h2>Fila de Espera para Atendimento</h2>
@@ -243,7 +169,6 @@
                         <th>Nº Atendimento</th>
                         <th>Paciente</th>
                         <th>Situação</th>
-                        <th>Triagem / Risco</th>
                         <th class="coluna-acao-painel">Ação</th>
                     </tr>
                 </thead>

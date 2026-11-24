@@ -56,8 +56,6 @@
         </div>
     </header>
 
-    </header>
-
     <main class="area-conteudo">
 
         <header class="cabecalho-pagina">
@@ -79,10 +77,16 @@
                     <span class="numero-etapa">2</span>
                     <span class="titulo-etapa">Contato e Endereço</span>
                 </div>
+                <div class="linha-conector"></div>
+                <div class="etapa-passo" id="step-3-indicator">
+                    <span class="numero-etapa">3</span>
+                    <span class="titulo-etapa">Acompanhante e Saúde</span>
+                </div>
             </div>
 
             <form id="formCadastro">
 
+                <!-- Etapa 1 -->
                 <div class="formulario-etapa" id="form1">
                     <h2><i class="bx bx-id-card"></i> Dados Pessoais</h2>
 
@@ -136,33 +140,34 @@
                     </div>
                 </div>
 
+                <!-- Etapa 2 -->
                 <div class="formulario-etapa" id="form2" style="display: none;">
                     <h2><i class="bx bx-map-pin"></i> Contato e Endereço</h2>
 
                     <div class="grade-formulario">
                         <div class="campo-input">
                             <label for="CEP">CEP <span class="campo-obrigatorio">*</span></label>
-                            <input type="text" id="CEP" placeholder="00000-000">
+                            <input type="text" id="CEP" placeholder="00000-000" required>
                         </div>
 
                         <div class="campo-input campo-largura-dupla">
                             <label for="Logradouro">Logradouro <span class="campo-obrigatorio">*</span></label>
-                            <input type="text" id="Logradouro" placeholder="Rua, Avenida, etc.">
+                            <input type="text" id="Logradouro" placeholder="Rua, Avenida, etc." required>
                         </div>
 
                         <div class="campo-input">
                             <label for="numero">Número <span class="campo-obrigatorio">*</span></label>
-                            <input type="text" id="numero" placeholder="Nº">
+                            <input type="text" id="numero" placeholder="Nº" required>
                         </div>
 
                         <div class="campo-input">
                             <label for="Bairro">Bairro <span class="campo-obrigatorio">*</span></label>
-                            <input type="text" id="Bairro" placeholder="Digite o Bairro">
+                            <input type="text" id="Bairro" placeholder="Digite o Bairro" required>
                         </div>
 
                         <div class="campo-input">
                             <label for="cidade">Cidade <span class="campo-obrigatorio">*</span></label>
-                            <input type="text" id="cidade" placeholder="Digite a Cidade">
+                            <input type="text" id="cidade" placeholder="Digite a Cidade" required>
                         </div>
 
                         <div class="campo-input">
@@ -201,7 +206,7 @@
 
                         <div class="campo-input">
                             <label for="telefone">Telefone <span class="campo-obrigatorio">*</span></label>
-                            <input type="tel" id="telefone" placeholder="(00) 00000-0000">
+                            <input type="tel" id="telefone" placeholder="(00) 00000-0000" required>
                         </div>
 
                         <div class="campo-input">
@@ -212,7 +217,7 @@
                         <div class="campo-input">
                             <label for="atendimento">Tipo de Atendimento <span
                                     class="campo-obrigatorio">*</span></label>
-                            <select id="atendimento" onchange="verificarAtendimento()">
+                            <select id="atendimento" onchange="verificarAtendimento()" required>
                                 <option value="" disabled selected>Selecione o tipo</option>
                                 <option value="1">Particular</option>
                                 <option value="2">SUS</option>
@@ -261,7 +266,56 @@
                                 <option value="Vitallis / MediSanitas">
                             </datalist>
                         </div>
+                    </div>
 
+                    <div class="painel-botoes espaco-entre">
+                        <button type="button" class="botao botao-secundario" onclick="etapaAnterior()">
+                            <i class="bx bx-chevron-left"></i> Voltar
+                        </button>
+                        <button type="button" class="botao botao-primario" onclick="proximaEtapa()">
+                            Próximo <i class="bx bx-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Etapa 3 -->
+                <div class="formulario-etapa" id="form3" style="display: none;">
+                    <h2><i class="bx bx-heart-circle"></i> Acompanhante e Informações Clínicas</h2>
+
+                    <div class="grade-formulario">
+                        <div class="campo-input">
+                            <label for="nomeAcompanhante">Nome do Acompanhante</label>
+                            <input type="text" id="nomeAcompanhante" name="nomeAcompanhante"
+                                placeholder="Digite o nome do acompanhante">
+                        </div>
+
+                        <div class="campo-input">
+                            <label for="telefoneAcompanhante">Telefone do Acompanhante</label>
+                            <input type="tel" id="telefoneAcompanhante" name="telefoneAcompanhante"
+                                placeholder="(00) 00000-0000">
+                        </div>
+
+                        <div class="campo-input">
+                            <label for="tipoSanguineo">Tipo Sanguíneo</label>
+                            <select id="tipoSanguineo" name="tipoSanguineo">
+                                <option value="" disabled selected>Selecione o tipo sanguíneo</option>
+                                <option value="A+">A+</option>
+                                <option value="A-">A-</option>
+                                <option value="B+">B+</option>
+                                <option value="B-">B-</option>
+                                <option value="AB+">AB+</option>
+                                <option value="AB-">AB-</option>
+                                <option value="O+">O+</option>
+                                <option value="O-">O-</option>
+                                <option value="NI">Não informado</option>
+                            </select>
+                        </div>
+
+                        <div class="campo-input campo-largura-total">
+                            <label for="alergias">Alergias do Paciente (caso haja)</label>
+                            <textarea id="alergias" name="alergias" rows="3"
+                                placeholder="Ex.: dipirona, penicilina, frutos do mar... (deixe em branco se não houver)"></textarea>
+                        </div>
                     </div>
 
                     <div class="painel-botoes espaco-entre">
@@ -402,6 +456,8 @@
 
     </main>
     <script src="scripts/cadastro.js"></script>
+    <script src="scripts/func_cep.js"></script>
+    <script src="scripts/func_cpf.js"></script>
 </body>
 
 </html>

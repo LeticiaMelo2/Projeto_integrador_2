@@ -8,30 +8,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-// Indicadores do painel.
-async function carregarIndicadoresTriagem() {
-    try {
-        const response = await fetch(
-            'http://localhost:3000/api/triagem/indicadores'
-        );
-
-        if (!response.ok) {
-            throw new Error('Erro ao buscar indicadores.');
-        }
-
-        const dados = await response.json();
-
-        document.getElementById('contadorAguardando').textContent =
-            dados.aguardando_triagem;
-
-        document.getElementById('contadorAtendidos').textContent =
-            dados.atendidos_hoje;
-
-    } catch (erro) {
-        console.error('Erro ao carregar contadores:', erro);
-    }
-}
-
 
 // Busca os pacientes apenas uma vez.
 async function carregarPainelTriagem() {
@@ -139,11 +115,7 @@ function renderizarPacientes(lista) {
 
             <td>${paciente.paciente_nome}</td>
 
-            <td>
-                <span class="badge badge-status">
-                    ${paciente.situacao_nome || 'Sem situação'}
-                </span>
-            </td>
+
 
             <td>${paciente.classificacao_risco || 'Aguardando triagem'}</td>
 

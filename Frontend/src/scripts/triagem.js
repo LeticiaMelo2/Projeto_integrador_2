@@ -43,7 +43,7 @@ async function carregarPacienteNaTriagem() {
         document.getElementById('paciente-nome').textContent = paciente.nome;
         document.getElementById('paciente-detalhes').textContent = `${idadeTexto} • ${paciente.sexo || 'Sexo não informado'} • CPF: ${paciente.cpf || '-'}`;
         document.getElementById('paciente-hora').textContent = horaChamada;
-        document.getElementById('paciente-acompanhante').textContent = paciente.acompanhante || 'Não informado';
+    
 
         //pinta a etiqueta de alergia de verde (sem alergia) ou vermelho (com alergia)
         const elAlergias = document.getElementById('paciente-alergias');

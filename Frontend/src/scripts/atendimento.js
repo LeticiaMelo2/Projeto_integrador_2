@@ -23,11 +23,7 @@ async function carregarFilaAtendimento() {
         }
 
         lista.forEach(paciente => {
-    let horaChegada = '--:--';
-    if (paciente.chegada) {
-        const data = new Date(paciente.chegada);
-        horaChegada = data.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
-    }
+    
 
     const risco = (paciente.classificacao_risco || '').toLowerCase();
     let classeCor = 'badge-azul';
@@ -52,7 +48,6 @@ async function carregarFilaAtendimento() {
         <td><strong>#${paciente.id_atendimento}</strong></td>
         <td>${paciente.nome_paciente}</td>
         <td><span class="badge-manchester ${classeCor}">${textoEtiqueta}</span></td>
-        <td>${horaChegada}</td>
         <td class="texto-centralizado">
             <button type="button" class="botao-chamar-tabela">
                 <i class="fa-solid fa-user-check"></i> Chamar
@@ -207,7 +202,6 @@ async function finalizarAtendimento(event) {
     const atendimentoId = document.getElementById('atendimentoId').value;
     const diagnostico = document.getElementById('diagnostico').value;
     const prescricao = document.getElementById('prescricao').value;
-    const observacoes = document.getElementById('observacoes').value;
 
     if (!atendimentoId) {
         alert('Nenhum paciente selecionado para atendimento.');
@@ -222,8 +216,7 @@ async function finalizarAtendimento(event) {
             },
             body: JSON.stringify({
                 diagnostico,
-                prescricao,
-                observacoes
+                prescricao
             })
         });
 
@@ -235,6 +228,7 @@ async function finalizarAtendimento(event) {
 
         // Mensagem final de paciente atendido
         alert('Paciente atendido com sucesso!');
+        console.log("deu certo claudinho");
 
         // Limpa o formulário, esconde a parte 2 e atualiza a fila lá em cima
         event.target.reset();

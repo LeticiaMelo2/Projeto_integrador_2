@@ -282,6 +282,7 @@ app.get('/api/pacientes/cadastrados', async (req, res) => {
                     WHERE a2.paciente_id = p.id
                 )
             LEFT JOIN situacoes s ON s.id = a.situacao_id
+            WHERE s.id = 1
             ORDER BY p.nome ASC
         `;
 
@@ -317,7 +318,7 @@ app.get('/api/atendimentos/painel', async (req, res) => {
             INNER JOIN pacientes p ON p.id = a.paciente_id
             INNER JOIN situacoes s ON s.id = a.situacao_id
             LEFT JOIN triagens t ON t.id_atendimento = a.id
-            WHERE a.situacao_id IN (1, 2, 3, 4)
+            WHERE a.situacao_id = 1
             ORDER BY a.id ASC
         `);
         return res.json(rows);
@@ -815,17 +816,17 @@ app.get('/api/atendimentos/:id', async (req, res) => {
 app.post('/api/atendimentos/:id/finalizar', async (req, res) => {
     let conexao;
     const { id } = req.params;
-    const { diagnostico, prescricao, observacoes } = req.body;
+    const { diagnostico, prescricao } = req.body;
 
     try {
         conexao = await conectar();
 
-        // 1. Insere os dados clínicos na tabela de consultas (ajuste o nome da tabela/colunas conforme seu banco)
+        // Insere os dados clínicos na tabela de consultas (ajuste o nome da tabela/colunas conforme seu banco)
         const sqlInsert = `
-            INSERT INTO consultas (atendimento_id, diagnostico, prescricao, observacoes)
-            VALUES (?, ?, ?, ?)
+            INSERT INTO consultas (atendimento_id, diagnostico, prescricao)
+            VALUES (?, ?, ?)
         `;
-        await conexao.query(sqlInsert, [id, diagnostico, prescricao, observacoes]);
+        await conexao.query(sqlInsert, [id, diagnostico, prescricao]);
 
         // 2. Atualiza o status do atendimento para 5 ("Atendido / Finalizado")
         await conexao.query('UPDATE atendimento SET situacao_id = 5 WHERE id = ?', [id]);

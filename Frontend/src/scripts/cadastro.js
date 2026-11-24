@@ -11,38 +11,62 @@ function verificarAtendimento() {
     }
 }
 
-// Avança para a etapa 2 do cadastro
-function proximaEtapa() {
-    const form1 = document.getElementById('form1');
-    const camposObrigatorios = form1.querySelectorAll('input[required], select[required]');
-    let camposValidos = true;
+let etapaAtual = 1;
 
-    camposObrigatorios.forEach(campo => {
+function validarEtapa(numeroEtapa) {
+    const containerEtapa = document.getElementById(`form${numeroEtapa}`);
+    if (!containerEtapa) return true;
+
+    const camposObrigatorios = containerEtapa.querySelectorAll('input[required], select[required], textarea[required]');
+    for (const campo of camposObrigatorios) {
         if (!campo.checkValidity()) {
             campo.reportValidity();
-            camposValidos = false;
+            return false;
         }
-    });
-
-    if (!camposValidos) return;
-
-    document.getElementById('form1').style.display = 'none';
-    document.getElementById('form2').style.display = 'block';
-    document.getElementById('step-1-indicator').classList.remove('etapa-ativa');
-    document.getElementById('step-2-indicator').classList.add('etapa-ativa');
+    }
+    return true;
 }
 
-// Retorna para a etapa 1 do cadastro
+function irParaEtapa(numeroEtapa) {
+    if (numeroEtapa < 1 || numeroEtapa > 3) return;
+
+    for (let i = 1; i <= 3; i++) {
+        const form = document.getElementById(`form${i}`);
+        const indicador = document.getElementById(`step-${i}-indicator`);
+
+        if (form) {
+            form.style.display = i === numeroEtapa ? 'block' : 'none';
+        }
+        if (indicador) {
+            indicador.classList.toggle('etapa-ativa', i === numeroEtapa);
+        }
+    }
+
+    etapaAtual = numeroEtapa;
+}
+
+// Avança da etapa 1 -> 2 ou da etapa 2 -> 3
+function proximaEtapa() {
+    if (!validarEtapa(etapaAtual)) return;
+    if (etapaAtual < 3) {
+        irParaEtapa(etapaAtual + 1);
+    }
+}
+
+// Retorna da etapa 3 -> 2 ou da etapa 2 -> 1
 function etapaAnterior() {
-    document.getElementById('form2').style.display = 'none';
-    document.getElementById('form1').style.display = 'block';
-    document.getElementById('step-2-indicator').classList.remove('etapa-ativa');
-    document.getElementById('step-1-indicator').classList.add('etapa-ativa');
+    if (etapaAtual > 1) {
+        irParaEtapa(etapaAtual - 1);
+    }
 }
 
 // Envia o formulário de cadastro para o backend
-document.getElementById('formCadastro').addEventListener('submit', async function(event) {
+document.getElementById('formCadastro').addEventListener('submit', async function (event) {
     event.preventDefault();
+
+    if (!validarEtapa(1) || !validarEtapa(2) || !validarEtapa(3)) {
+        return;
+    }
 
     const pacienteData = {
         nome: document.getElementById('name').value,
@@ -61,7 +85,11 @@ document.getElementById('formCadastro').addEventListener('submit', async functio
         telefone: document.getElementById('telefone').value,
         email: document.getElementById('email').value || null,
         tipo_atendimento_id: document.getElementById('atendimento').value,
-        convenio_id: document.getElementById('plano').value || null
+        convenio_id: document.getElementById('plano').value || null,
+        nome_acompanhante: document.getElementById('nomeAcompanhante')?.value || null,
+        telefone_acompanhante: document.getElementById('telefoneAcompanhante')?.value || null,
+        tipo_sanguineo: document.getElementById('tipoSanguineo')?.value || null,
+        alergias: document.getElementById('alergias')?.value || null
     };
 
     try {
@@ -79,7 +107,8 @@ document.getElementById('formCadastro').addEventListener('submit', async functio
 
         alert(`Paciente registrado com sucesso!\nNúmero de Atendimento: #${dados.numero_atendimento}`);
         event.target.reset();
-        etapaAnterior();
+        verificarAtendimento();
+        irParaEtapa(1);
         carregarPacientesCadastrados();
     } catch (erro) {
         console.error('Erro ao cadastrar paciente:', erro);
@@ -196,7 +225,7 @@ function fecharModalEdicao() {
 }
 
 // Salva as alterações realizadas no modal
-document.getElementById('formEdicaoPaciente').addEventListener('submit', async function(event) {
+document.getElementById('formEdicaoPaciente').addEventListener('submit', async function (event) {
     event.preventDefault();
 
     if (!pacienteEmEdicao) return;
@@ -306,5 +335,6 @@ async function cancelarAtendimento(numeroAtendimento) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+    irParaEtapa(1);
     carregarPacientesCadastrados();
 });
